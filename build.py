@@ -14,8 +14,8 @@ import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 AMOUNTS = {  # same numbers in both surveys; € in the German survey, $ in the English (US) survey
-    'de': {'show_up': '€6.00', 'questionnaire': '€3.00', 'per_round': '€2.00', 'max_belief': '€12.00', 'wheel_bonus': '€6.00'},
-    'en': {'show_up': '$6.00', 'questionnaire': '$3.00', 'per_round': '$2.00', 'max_belief': '$12.00', 'wheel_bonus': '$6.00'},
+    'de': {'show_up': '€6.00', 'questionnaire': '€3.00', 'per_round': '€10.00', 'wheel_bonus': '€10.00'},
+    'en': {'show_up': '$6.00', 'questionnaire': '$3.00', 'per_round': '$10.00', 'wheel_bonus': '$10.00'},
 }
 
 # Ticket examples: estimate for wheel A (%) -> winning tickets out of 10,000 if A / if B is the selected wheel
@@ -68,10 +68,11 @@ DE = {
     ],
     'pay_h': 'Auszahlung',
     'pay_fixed': f'Sie erhalten eine Basiszahlung von <b>{A["show_up"]}</b> für die Teilnahme und zusätzliche <b>{A["questionnaire"]}</b> für das Ausfüllen des Fragebogens am Ende.',
-    'belief_h': 'Bonus für Ihre Wahrscheinlichkeitsschätzungen',
+    'belief_h': 'Bonus für Ihre Wahrscheinlichkeitsschätzung',
     'belief': [
-        'In jeder Runde wird eine Ihrer neun Schätzungen zufällig ausgewählt (vor der ersten Drehung oder nach Drehung 1 bis 8). '
-        f'Mit dieser Schätzung nehmen Sie an einer Verlosung von <b>{A["per_round"]}</b> teil. Insgesamt können Sie so bis zu <b>{A["max_belief"]}</b> gewinnen.',
+        'Am Ende des Experiments wird eine der sechs Runden zufällig ausgelost; nur diese Runde zählt für Ihren Bonus. '
+        'In dieser Runde wird eine Ihrer neun Schätzungen zufällig ausgewählt (vor der ersten Drehung oder nach Drehung 1 bis 8). '
+        f'Mit dieser Schätzung nehmen Sie an einer Verlosung von <b>{A["per_round"]}</b> teil. Da jede Runde ausgelost werden kann, lohnt es sich, in jeder Runde sorgfältig zu schätzen.',
         'Je näher Ihre Schätzung an dem Rad liegt, das in dieser Runde das ausgewählte Rad ist, desto mehr Gewinnlose erhalten Sie.',
         '<b>Ihre Gewinnchance ist am größten, wenn Sie den Schieberegler immer auf die Wahrscheinlichkeit stellen, die Sie selbst für zutreffend halten.</b>',
     ],
@@ -89,7 +90,7 @@ DE = {
     'bet_h': 'Bonus-Glücksrad',
     'bet': [
         'Zu Beginn jeder Runde wetten Sie, ob Rad A oder Rad B das ausgewählte Glücksrad dieser Runde ist. Sie schließen diese Wette in jeder Runde ab, also 6 Mal.',
-        f'Am Ende des Experiments wird eine Runde zufällig ausgewählt. Wenn Sie in dieser Runde auf das ausgewählte Rad gewettet haben, beträgt Ihr Bonus für das Glücksrad <b>{A["wheel_bonus"]}</b>.',
+        f'Am Ende des Experiments wird eine Runde zufällig ausgelost – dieselbe Runde wie für Ihre Wahrscheinlichkeitsschätzung. Wenn Sie in dieser Runde auf das ausgewählte Rad gewettet haben, beträgt Ihr Bonus für das Glücksrad <b>{A["wheel_bonus"]}</b>.',
     ],
     'own_h': 'Ihr Rad',
     'own': [
@@ -97,20 +98,20 @@ DE = {
         'Welches Rad das ist, wurde für Sie zufällig festgelegt und wird Ihnen im Experiment angezeigt.',
         'Dieses Rad ist <b>Ihr Rad</b>, wenn Ihr Ergebnis in den Musteraufgaben mindestens so gut war wie das der Hälfte der bisherigen Teilnehmenden; '
         'andernfalls ist das andere Rad Ihr Rad. Welches Rad Ihr Rad ist, erfahren Sie am Ende des Experiments.',
-        f'Am Ende des Experiments wird eine Runde zufällig ausgewählt. Wenn in dieser Runde Ihr Rad das ausgewählte Rad ist, beträgt Ihr Bonus für Ihr Rad <b>{A["wheel_bonus"]}</b>.',
+        f'Am Ende des Experiments wird eine Runde zufällig ausgelost – dieselbe Runde wie für Ihre Wahrscheinlichkeitsschätzung. Wenn in dieser Runde Ihr Rad das ausgewählte Rad ist, beträgt Ihr Bonus für Ihr Rad <b>{A["wheel_bonus"]}</b>.',
     ],
     'coin_ego': [
-        'Am Ende des Experiments entscheidet ein Münzwurf, ob Ihnen <b>entweder</b> die Boni für Ihre Wahrscheinlichkeitsschätzungen <b>oder</b> der Bonus für Ihr Rad ausgezahlt wird. Sie erhalten nie beide.',
+        'Am Ende des Experiments entscheidet ein Münzwurf, ob Ihnen für die ausgeloste Runde <b>entweder</b> der Bonus für Ihre Wahrscheinlichkeitsschätzung <b>oder</b> der Bonus für Ihr Rad ausgezahlt wird. Sie erhalten nie beide.',
         'Deshalb lohnt es sich, bei den Schätzungen immer Ihre tatsächliche Einschätzung anzugeben, unabhängig davon, welches Rad Ihr Rad ist.',
     ],
     'rand_h': 'Zufallsbonus',
     'rand': [f'Am Ende des Experiments wird außerdem ein Zufallsbonus von <b>{A["wheel_bonus"]}</b> verlost, den Sie mit einer Wahrscheinlichkeit von 50% gewinnen.'],
     'coin_ctrl': [
-        'Am Ende des Experiments entscheidet ein Münzwurf, ob Ihnen <b>entweder</b> die Boni für Ihre Wahrscheinlichkeitsschätzungen <b>oder</b> der Zufallsbonus ausgezahlt wird. Sie erhalten nie beide.',
+        'Am Ende des Experiments entscheidet ein Münzwurf, ob Ihnen <b>entweder</b> der Bonus für Ihre Wahrscheinlichkeitsschätzung <b>oder</b> der Zufallsbonus ausgezahlt wird. Sie erhalten nie beide.',
     ],
     'coin_h': 'Münzwurf: welcher Bonus ausgezahlt wird',
     'coin': [
-        'Am Ende des Experiments entscheidet ein Münzwurf, ob Ihnen <b>entweder</b> die Boni für Ihre Wahrscheinlichkeitsschätzungen <b>oder</b> der Bonus für das Glücksrad ausgezahlt wird. Sie erhalten nie beide.',
+        'Am Ende des Experiments entscheidet ein Münzwurf, ob Ihnen für die ausgeloste Runde <b>entweder</b> der Bonus für Ihre Wahrscheinlichkeitsschätzung <b>oder</b> der Bonus für das Glücksrad ausgezahlt wird. Sie erhalten nie beide.',
         'Deshalb lohnt es sich, bei den Schätzungen immer Ihre tatsächliche Einschätzung anzugeben, unabhängig davon, auf welches Rad Sie gewettet haben.',
     ],
     'end': 'Am Ende des Experiments teilen wir Ihnen mit, welches Rad in jeder Runde das ausgewählte Glücksrad war, und geben Ihnen eine Aufschlüsselung Ihrer gesamten Auszahlung.',
@@ -158,10 +159,11 @@ EN = {
     ],
     'pay_h': 'Payment',
     'pay_fixed': f'You receive a base payment of <b>{A["show_up"]}</b> for taking part and an additional <b>{A["questionnaire"]}</b> for completing the questionnaire at the end.',
-    'belief_h': 'Bonus for your probability estimates',
+    'belief_h': 'Bonus for your probability estimate',
     'belief': [
-        'In each round, one of your nine estimates is chosen at random (before the first spin or after any one of the 8 spins). '
-        f'With this estimate you take part in a lottery for <b>{A["per_round"]}</b>. In total you can win up to <b>{A["max_belief"]}</b> this way.',
+        'At the end of the experiment one of the six rounds is drawn at random; only this round counts for your bonus. '
+        'In this round, one of your nine estimates is chosen at random (before the first spin or after any one of the 8 spins). '
+        f'With this estimate you take part in a lottery for <b>{A["per_round"]}</b>. Since any round can be drawn, it pays to estimate carefully in every round.',
         'The closer your estimate is to the wheel that is the selected wheel of that round, the more winning tickets you receive.',
         '<b>Your chance of winning is highest if you always set the slider to the probability that you yourself believe is correct.</b>',
     ],
@@ -179,7 +181,7 @@ EN = {
     'bet_h': 'Bonus wheel',
     'bet': [
         'At the start of each round you bet on whether Wheel A or Wheel B is the selected wheel of that round. You place this bet in every round, so 6 times.',
-        f'At the end of the experiment one round is chosen at random. If you bet on the selected wheel in that round, your bonus for the wheel is <b>{A["wheel_bonus"]}</b>.',
+        f'At the end of the experiment one round is drawn at random – the same round as for your probability estimate. If you bet on the selected wheel in that round, your bonus for the wheel is <b>{A["wheel_bonus"]}</b>.',
     ],
     'own_h': 'Your wheel',
     'own': [
@@ -187,20 +189,20 @@ EN = {
         'Which wheel this is was decided at random for you and is shown to you during the experiment.',
         'This wheel is <b>your wheel</b> if your result in the pattern tasks was at least as good as that of half of the earlier participants; '
         'otherwise the other wheel is your wheel. You find out which wheel is your wheel at the end of the experiment.',
-        f'At the end of the experiment one round is chosen at random. If your wheel is the selected wheel in that round, your bonus for your wheel is <b>{A["wheel_bonus"]}</b>.',
+        f'At the end of the experiment one round is drawn at random – the same round as for your probability estimate. If your wheel is the selected wheel in that round, your bonus for your wheel is <b>{A["wheel_bonus"]}</b>.',
     ],
     'coin_ego': [
-        'At the end of the experiment a coin flip decides whether you are paid <b>either</b> the bonuses for your probability estimates <b>or</b> the bonus for your wheel. You never receive both.',
+        'At the end of the experiment a coin flip decides whether, for the drawn round, you are paid <b>either</b> the bonus for your probability estimate <b>or</b> the bonus for your wheel. You never receive both.',
         'This is why it always pays to report your true estimate, regardless of which wheel is your wheel.',
     ],
     'rand_h': 'Random bonus',
     'rand': [f'At the end of the experiment there is also a random bonus of <b>{A["wheel_bonus"]}</b>, which you win with a probability of 50%.'],
     'coin_ctrl': [
-        'At the end of the experiment a coin flip decides whether you are paid <b>either</b> the bonuses for your probability estimates <b>or</b> the random bonus. You never receive both.',
+        'At the end of the experiment a coin flip decides whether you are paid <b>either</b> the bonus for your probability estimate <b>or</b> the random bonus. You never receive both.',
     ],
     'coin_h': 'Coin flip: which bonus is paid',
     'coin': [
-        'At the end of the experiment a coin flip decides whether you are paid <b>either</b> the bonuses for your probability estimates <b>or</b> the bonus for the wheel. You never receive both.',
+        'At the end of the experiment a coin flip decides whether, for the drawn round, you are paid <b>either</b> the bonus for your probability estimate <b>or</b> the bonus for the wheel. You never receive both.',
         'This is why it always pays to report your true estimate, regardless of which wheel you bet on.',
     ],
     'end': 'At the end of the experiment we tell you which wheel was the selected wheel in each round and give you a breakdown of your total payment.',
