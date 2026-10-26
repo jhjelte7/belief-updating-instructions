@@ -1,0 +1,276 @@
+"""Build the participant instruction pages (German + English) for the belief-updating study.
+
+Writes:
+  index.html            language choice
+  de/index.html         standard treatment (Deutsch)
+  de/bonusrad.html      bonus-wheel (motivated) treatment (Deutsch)
+  en/index.html         standard treatment (English)
+  en/bonus-wheel.html   bonus-wheel (motivated) treatment (English)
+
+Edit the text in DE / EN below and run:  python build.py
+Amounts are fixed here (they are not piped from Qualtrics), so keep them in sync with the survey.
+"""
+import os
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+AMOUNTS = {'show_up': '€6.00', 'questionnaire': '€3.00', 'per_round': '€2.00', 'max_belief': '€12.00', 'wheel_bonus': '€6.00'}
+
+# Ticket examples: estimate for wheel A (%) -> winning tickets out of 10,000 if A / if B is the selected wheel
+EXAMPLES = [(p, 10000 - (p - 100) ** 2, 10000 - p ** 2) for p in (0, 20, 50, 80, 100)]
+
+
+def fmt(n, sep):
+    return f'{n:,}'.replace(',', sep)
+
+
+DE = {
+    'lang': 'de', 'other_lang': 'English',
+    'title': 'Anleitung zum Experiment',
+    'title_bonus': 'Anleitung zum Experiment (mit Bonus-Glücksrad)',
+    'intro_h': 'Die beiden Glücksräder',
+    'intro': [
+        'Im Experiment verwenden wir zwei verschiedene „Glücksräder“. Jedes Rad ist gleichmäßig in vier Felder unterteilt. '
+        'Rad A (das „grüne Rad“) besteht zu drei Vierteln aus Grün und zu einem Viertel aus Gelb. '
+        'Rad B (das „gelbe Rad“) besteht zu drei Vierteln aus Gelb und zu einem Viertel aus Grün. '
+        'Dieser Aufbau ist für Ihre Entscheidungen während des Experiments sehr wichtig.',
+    ],
+    'img_wheels': 'Rad A links mit drei grünen und einem gelben Feld, Rad B rechts mit drei gelben und einem grünen Feld',
+    'covered': 'Während des Experiments sind die farbigen Felder der Räder verdeckt, wie im Bild unten.',
+    'img_covered': 'Die beiden Räder mit verdeckten Feldern',
+    'flow_h': 'Ablauf',
+    'flow': [
+        'Das Experiment besteht aus 6 Runden. In jeder Runde gibt es ein „ausgewähltes Glücksrad“: entweder Rad A oder Rad B. '
+        'Da die Felder verdeckt sind, können Sie nicht sehen, welches Rad das ausgewählte Rad ist.',
+        'In jeder Runde sehen Sie 8 Drehungen. Nach jeder Drehung wird das Feld aufgedeckt, auf das der rote Zeiger am oberen Rand des Rades zeigt. '
+        'Die Abfolge der Drehungen wurde vorab festgelegt.',
+        'Welches Rad das ausgewählte Rad einer Runde ist, wird vom Computer per Zufall bestimmt, und zwar passend zu den aufgedeckten Feldern: '
+        'Je mehr grüne Felder aufgedeckt werden, desto wahrscheinlicher ist Rad A das ausgewählte Rad; je mehr gelbe Felder, desto wahrscheinlicher Rad B. '
+        'Die Wahrscheinlichkeiten sind genau dieselben, als ob zu Beginn der Runde eines der beiden Räder zufällig (50% – 50%) ausgewählt und dann gedreht worden wäre. '
+        'Die aufgedeckten Felder helfen Ihnen also einzuschätzen, welches Rad das ausgewählte Rad ist.',
+        'Da immer nur ein Feld aufgedeckt wird, können Sie bei einem grünen oder gelben Feld nie ganz sicher sein, welches Rad das ausgewählte ist. '
+        'Der Zeiger kann auch mehrmals auf dasselbe Feld zeigen; ob das der Fall ist, wissen Sie nicht.',
+    ],
+    'slider_h': 'Der Schieberegler',
+    'slider': [
+        'Vor der ersten Drehung und nach jeder Drehung geben Sie mit einem Schieberegler an, wie wahrscheinlich Sie es finden, '
+        'dass das ausgewählte Rad Rad A (grünes Rad) oder Rad B (gelbes Rad) ist. Links neben dem Regler sehen Sie Rad A, rechts Rad B.',
+    ],
+    'img_slider': 'Schieberegler zwischen Rad A (links) und Rad B (rechts) mit der Anzeige „A: 50% - B: 50%“',
+    'slider_list': [
+        '<b>Mitte:</b> Beide Räder sind gleich wahrscheinlich (je 50%). Sie sind sich völlig unsicher.',
+        '<b>Nach links:</b> Sie halten Rad A für wahrscheinlicher. Je weiter links, desto sicherer sind Sie. Ganz links bedeutet „A: 100% - B: 0%“.',
+        '<b>Nach rechts:</b> Sie halten Rad B für wahrscheinlicher. Je weiter rechts, desto sicherer sind Sie. Ganz rechts bedeutet „A: 0% - B: 100%“.',
+        '<b>Anzeige:</b> Über dem Regler sehen Sie die Wahrscheinlichkeiten für Rad A und B. Sie ergeben immer zusammen 100%.',
+    ],
+    'pay_h': 'Auszahlung',
+    'pay_fixed': f'Sie erhalten eine Basiszahlung von <b>{AMOUNTS["show_up"]}</b> für die Teilnahme und zusätzliche <b>{AMOUNTS["questionnaire"]}</b> für das Ausfüllen des Fragebogens am Ende.',
+    'pay_fixed_bonus': f'Sie erhalten eine Basiszahlung von <b>{AMOUNTS["show_up"]}</b> für die Teilnahme.',
+    'belief_h': 'Bonus für Ihre Wahrscheinlichkeitsschätzungen',
+    'belief': [
+        'In jeder Runde wird eine Ihrer neun Schätzungen zufällig ausgewählt (vor der ersten Drehung oder nach Drehung 1 bis 8). '
+        f'Mit dieser Schätzung nehmen Sie an einer Verlosung von <b>{AMOUNTS["per_round"]}</b> teil. Insgesamt können Sie so bis zu <b>{AMOUNTS["max_belief"]}</b> gewinnen.',
+        'Je näher Ihre Schätzung an dem Rad liegt, das in dieser Runde das ausgewählte Rad ist, desto mehr Gewinnlose erhalten Sie.',
+        '<b>Ihre Gewinnchance ist am größten, wenn Sie den Schieberegler immer auf die Wahrscheinlichkeit stellen, die Sie selbst für zutreffend halten.</b> '
+        'Das gilt unabhängig davon, wie gern Sie Risiken eingehen.',
+    ],
+    'rule_h': 'Die genaue Regel',
+    'rule': [
+        'Für die ausgewählte Schätzung gibt es 10.000 Lose. Davon sind 10.000 − (Abstand)² Gewinnlose. '
+        'Der Abstand ist der Unterschied in Prozentpunkten zwischen Ihrer Schätzung für Rad A und 100, wenn Rad A das ausgewählte Rad ist, '
+        'bzw. 0, wenn Rad B das ausgewählte Rad ist. Dann wird ein Los gezogen.',
+        'Beispiel: Sie haben 80% für Rad A angegeben. Ist Rad A das ausgewählte Rad, beträgt der Abstand 20, also 10.000 − 400 = 9.600 Gewinnlose (96%). '
+        'Ist Rad B das ausgewählte Rad, beträgt der Abstand 80, also 10.000 − 6.400 = 3.600 Gewinnlose (36%).',
+    ],
+    'table_head': ('Ihre Schätzung für Rad A', 'Gewinnlose, wenn Rad A ausgewählt ist', 'Gewinnlose, wenn Rad B ausgewählt ist'),
+    'sep': '.',
+    'bet_h': 'Bonus-Glücksrad',
+    'bet': [
+        'Zu Beginn jeder Runde wetten Sie, ob Rad A oder Rad B das ausgewählte Glücksrad dieser Runde ist. Sie schließen diese Wette in jeder Runde ab, also 6 Mal.',
+        f'Am Ende des Experiments wird eine Runde zufällig ausgewählt. Wenn Sie in dieser Runde auf das ausgewählte Rad gewettet haben, beträgt Ihr Bonus für das Glücksrad <b>{AMOUNTS["wheel_bonus"]}</b>.',
+    ],
+    'coin_h': 'Münzwurf: welcher Bonus ausgezahlt wird',
+    'coin': [
+        'Am Ende des Experiments entscheidet ein Münzwurf, ob Ihnen <b>entweder</b> die Boni für Ihre Wahrscheinlichkeitsschätzungen <b>oder</b> der Bonus für das Glücksrad ausgezahlt wird. Sie erhalten nie beide.',
+        'Deshalb lohnt es sich, bei den Schätzungen immer Ihre tatsächliche Einschätzung anzugeben, unabhängig davon, auf welches Rad Sie gewettet haben.',
+    ],
+    'end': 'Am Ende des Experiments teilen wir Ihnen mit, welches Rad in jeder Runde das ausgewählte Glücksrad war, und geben Ihnen eine Aufschlüsselung Ihrer gesamten Auszahlung.',
+    'choose': 'Bitte wählen Sie Ihre Sprache',
+}
+
+EN = {
+    'lang': 'en', 'other_lang': 'Deutsch',
+    'title': 'Instructions for the experiment',
+    'title_bonus': 'Instructions for the experiment (with bonus wheel)',
+    'intro_h': 'The two wheels of fortune',
+    'intro': [
+        'In this experiment we use two different "wheels of fortune". Each wheel is divided evenly into four fields. '
+        'Wheel A (the "green wheel") is three quarters green and one quarter yellow. '
+        'Wheel B (the "yellow wheel") is three quarters yellow and one quarter green. '
+        'This set-up is very important for your decisions during the experiment.',
+    ],
+    'img_wheels': 'Wheel A on the left with three green fields and one yellow field, wheel B on the right with three yellow fields and one green field',
+    'covered': 'During the experiment the coloured fields of the wheels are covered, as in the picture below.',
+    'img_covered': 'The two wheels with their fields covered',
+    'flow_h': 'How it works',
+    'flow': [
+        'The experiment has 6 rounds. In each round there is a "selected wheel": either wheel A or wheel B. '
+        'Because the fields are covered, you cannot see which wheel is the selected wheel.',
+        'In each round you see 8 spins. After each spin, the field that the red pointer at the top of the wheel points to is revealed. '
+        'The sequence of spins was fixed in advance.',
+        'Which wheel is the selected wheel of a round is determined at random by the computer, in line with the revealed fields: '
+        'the more green fields are revealed, the more likely wheel A is the selected wheel; the more yellow fields, the more likely wheel B. '
+        'The probabilities are exactly the same as if one of the two wheels had been selected at random (50% – 50%) at the start of the round and then spun. '
+        'So the revealed fields help you judge which wheel is the selected wheel.',
+        'Because only one field is revealed at a time, a green or yellow field never tells you for certain which wheel is the selected one. '
+        'The pointer may also point to the same field several times; you do not know whether that is the case.',
+    ],
+    'slider_h': 'The slider',
+    'slider': [
+        'Before the first spin and after every spin, you use a slider to tell us how likely you think it is that the selected wheel is '
+        'wheel A (green wheel) or wheel B (yellow wheel). Wheel A is shown to the left of the slider, wheel B to the right.',
+    ],
+    'img_slider': 'Slider between wheel A (left) and wheel B (right) showing "A: 50% - B: 50%"',
+    'slider_list': [
+        '<b>Middle:</b> both wheels are equally likely (50% each). You are completely unsure.',
+        '<b>To the left:</b> you think wheel A is more likely. The further left, the more certain you are. All the way left means "A: 100% - B: 0%".',
+        '<b>To the right:</b> you think wheel B is more likely. The further right, the more certain you are. All the way right means "A: 0% - B: 100%".',
+        '<b>Display:</b> above the slider you see the probabilities for wheel A and B. They always add up to 100%.',
+    ],
+    'pay_h': 'Payment',
+    'pay_fixed': f'You receive a base payment of <b>{AMOUNTS["show_up"]}</b> for taking part and an additional <b>{AMOUNTS["questionnaire"]}</b> for completing the questionnaire at the end.',
+    'pay_fixed_bonus': f'You receive a base payment of <b>{AMOUNTS["show_up"]}</b> for taking part.',
+    'belief_h': 'Bonus for your probability estimates',
+    'belief': [
+        'In each round, one of your nine estimates is chosen at random (before the first spin or after spin 1 to 8). '
+        f'With this estimate you take part in a lottery for <b>{AMOUNTS["per_round"]}</b>. In total you can win up to <b>{AMOUNTS["max_belief"]}</b> this way.',
+        'The closer your estimate is to the wheel that is the selected wheel of that round, the more winning tickets you receive.',
+        '<b>Your chance of winning is highest if you always set the slider to the probability that you yourself believe is correct.</b> '
+        'This holds regardless of how much you like or dislike risk.',
+    ],
+    'rule_h': 'The exact rule',
+    'rule': [
+        'There are 10,000 tickets for the chosen estimate, of which 10,000 − (distance)² are winning tickets. '
+        'The distance is the difference in percentage points between your estimate for wheel A and 100 if wheel A is the selected wheel, '
+        'or 0 if wheel B is the selected wheel. Then one ticket is drawn.',
+        'Example: you reported 80% for wheel A. If wheel A is the selected wheel, the distance is 20, so 10,000 − 400 = 9,600 winning tickets (96%). '
+        'If wheel B is the selected wheel, the distance is 80, so 10,000 − 6,400 = 3,600 winning tickets (36%).',
+    ],
+    'table_head': ('Your estimate for wheel A', 'Winning tickets if wheel A is selected', 'Winning tickets if wheel B is selected'),
+    'sep': ',',
+    'bet_h': 'Bonus wheel',
+    'bet': [
+        'At the start of each round you bet on whether wheel A or wheel B is the selected wheel of that round. You place this bet in every round, so 6 times.',
+        f'At the end of the experiment one round is chosen at random. If you bet on the selected wheel in that round, your bonus for the wheel is <b>{AMOUNTS["wheel_bonus"]}</b>.',
+    ],
+    'coin_h': 'Coin flip: which bonus is paid',
+    'coin': [
+        'At the end of the experiment a coin flip decides whether you are paid <b>either</b> the bonuses for your probability estimates <b>or</b> the bonus for the wheel. You never receive both.',
+        'This is why it always pays to report your true estimate, regardless of which wheel you bet on.',
+    ],
+    'end': 'At the end of the experiment we tell you which wheel was the selected wheel in each round and give you a breakdown of your total payment.',
+    'choose': 'Please choose your language',
+}
+
+PAGES = {'de': ('index.html', 'bonusrad.html'), 'en': ('index.html', 'bonus-wheel.html')}
+
+
+def paras(items):
+    return '\n'.join(f'<p>{t}</p>' for t in items)
+
+
+def page(T, bonus):
+    other = EN if T is DE else DE
+    std, bon = PAGES[T['lang']]
+    o_std, o_bon = PAGES[other['lang']]
+    switch = f'../{other["lang"]}/{o_bon if bonus else o_std}'
+    rows = '\n'.join(f'<tr><td>{p}%</td><td>{fmt(a, T["sep"])} ({a // 100}%)</td><td>{fmt(b, T["sep"])} ({b // 100}%)</td></tr>' for p, a, b in EXAMPLES)
+    th = ''.join(f'<th scope="col">{h}</th>' for h in T['table_head'])
+    bet = f'<h2>{T["bet_h"]}</h2>\n{paras(T["bet"])}\n' if bonus else ''
+    coin = f'<h3>{T["coin_h"]}</h3>\n{paras(T["coin"])}\n' if bonus else ''
+    return f'''<!doctype html>
+<html lang="{T['lang']}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{T['title_bonus'] if bonus else T['title']}</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<main>
+<nav class="lang"><a href="{switch}" hreflang="{other['lang']}" lang="{other['lang']}">{T['other_lang']}</a></nav>
+<h1>{T['title_bonus'] if bonus else T['title']}</h1>
+
+<h2>{T['intro_h']}</h2>
+{paras(T['intro'])}
+<img src="../img/wheels.png" width="1259" height="894" alt="{T['img_wheels']}">
+<p>{T['covered']}</p>
+<img src="../img/wheels-covered.png" width="746" height="524" alt="{T['img_covered']}">
+
+<h2>{T['flow_h']}</h2>
+{paras(T['flow'])}
+
+<h2>{T['slider_h']}</h2>
+{paras(T['slider'])}
+<img src="../img/slider.png" width="1210" height="465" alt="{T['img_slider']}">
+<ul>
+{''.join(f'<li>{t}</li>' for t in T['slider_list'])}
+</ul>
+
+{bet}<h2>{T['pay_h']}</h2>
+<p>{T['pay_fixed_bonus'] if bonus else T['pay_fixed']}</p>
+<h3>{T['belief_h']}</h3>
+{paras(T['belief'])}
+<h3>{T['rule_h']}</h3>
+{paras(T['rule'])}
+<div class="table-wrap"><table>
+<thead><tr>{th}</tr></thead>
+<tbody>
+{rows}
+</tbody>
+</table></div>
+{coin}<p>{T['end']}</p>
+</main>
+</body>
+</html>
+'''
+
+
+def index():
+    return f'''<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{DE['title']} / {EN['title']}</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+<h1>{DE['title']}</h1>
+<p>{DE['choose']} / <span lang="en">{EN['choose']}</span>:</p>
+<ul class="choose">
+<li><a href="de/" hreflang="de">Deutsch</a></li>
+<li><a href="en/" hreflang="en" lang="en">English</a></li>
+</ul>
+</main>
+</body>
+</html>
+'''
+
+
+def main():
+    out = {'index.html': index()}
+    for T in (DE, EN):
+        std, bon = PAGES[T['lang']]
+        out[f'{T["lang"]}/{std}'] = page(T, False)
+        out[f'{T["lang"]}/{bon}'] = page(T, True)
+    for rel, html in out.items():
+        path = os.path.join(HERE, rel)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, 'w', encoding='utf-8', newline='\n') as f:
+            f.write(html)
+        print('wrote', rel)
+
+
+if __name__ == '__main__':
+    main()
