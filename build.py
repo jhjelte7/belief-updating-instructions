@@ -87,6 +87,11 @@ DE = {
         'Zu Beginn jeder Runde wetten Sie, ob Rad A oder Rad B das ausgewählte Glücksrad dieser Runde ist. Sie schließen diese Wette in jeder Runde ab, also 6 Mal.',
         f'Am Ende des Experiments wird eine Runde zufällig ausgewählt. Wenn Sie in dieser Runde auf das ausgewählte Rad gewettet haben, beträgt Ihr Bonus für das Glücksrad <b>{AMOUNTS["wheel_bonus"]}</b>.',
     ],
+    'rand_h': 'Zufallsbonus',
+    'rand': [f'Am Ende des Experiments wird außerdem ein Zufallsbonus von <b>{AMOUNTS["wheel_bonus"]}</b> verlost, den Sie mit einer Wahrscheinlichkeit von 50% gewinnen.'],
+    'coin_ctrl': [
+        'Am Ende des Experiments entscheidet ein Münzwurf, ob Ihnen <b>entweder</b> die Boni für Ihre Wahrscheinlichkeitsschätzungen <b>oder</b> der Zufallsbonus ausgezahlt wird. Sie erhalten nie beide.',
+    ],
     'coin_h': 'Münzwurf: welcher Bonus ausgezahlt wird',
     'coin': [
         'Am Ende des Experiments entscheidet ein Münzwurf, ob Ihnen <b>entweder</b> die Boni für Ihre Wahrscheinlichkeitsschätzungen <b>oder</b> der Bonus für das Glücksrad ausgezahlt wird. Sie erhalten nie beide.',
@@ -160,6 +165,11 @@ EN = {
         'At the start of each round you bet on whether wheel A or wheel B is the selected wheel of that round. You place this bet in every round, so 6 times.',
         f'At the end of the experiment one round is chosen at random. If you bet on the selected wheel in that round, your bonus for the wheel is <b>{AMOUNTS["wheel_bonus"]}</b>.',
     ],
+    'rand_h': 'Random bonus',
+    'rand': [f'At the end of the experiment there is also a random bonus of <b>{AMOUNTS["wheel_bonus"]}</b>, which you win with a probability of 50%.'],
+    'coin_ctrl': [
+        'At the end of the experiment a coin flip decides whether you are paid <b>either</b> the bonuses for your probability estimates <b>or</b> the random bonus. You never receive both.',
+    ],
     'coin_h': 'Coin flip: which bonus is paid',
     'coin': [
         'At the end of the experiment a coin flip decides whether you are paid <b>either</b> the bonuses for your probability estimates <b>or</b> the bonus for the wheel. You never receive both.',
@@ -184,7 +194,10 @@ def page(T, bonus):
     rows = '\n'.join(f'<tr><td>{p}%</td><td>{fmt(a, T["sep"])} ({a // 100}%)</td><td>{fmt(b, T["sep"])} ({b // 100}%)</td></tr>' for p, a, b in EXAMPLES)
     th = ''.join(f'<th scope="col">{h}</th>' for h in T['table_head'])
     bet = f'<h2>{T["bet_h"]}</h2>\n{paras(T["bet"])}\n' if bonus else ''
-    coin = f'<h3>{T["coin_h"]}</h3>\n{paras(T["coin"])}\n' if bonus else ''
+    if bonus:
+        coin = f'<h3>{T["coin_h"]}</h3>\n{paras(T["coin"])}\n'
+    else:
+        coin = f'<h3>{T["rand_h"]}</h3>\n{paras(T["rand"])}\n<h3>{T["coin_h"]}</h3>\n{paras(T["coin_ctrl"])}\n'
     return f'''<!doctype html>
 <html lang="{T['lang']}">
 <head>
