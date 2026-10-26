@@ -73,8 +73,7 @@ DE = {
         'In jeder Runde wird eine Ihrer neun Schätzungen zufällig ausgewählt (vor der ersten Drehung oder nach Drehung 1 bis 8). '
         f'Mit dieser Schätzung nehmen Sie an einer Verlosung von <b>{A["per_round"]}</b> teil. Insgesamt können Sie so bis zu <b>{A["max_belief"]}</b> gewinnen.',
         'Je näher Ihre Schätzung an dem Rad liegt, das in dieser Runde das ausgewählte Rad ist, desto mehr Gewinnlose erhalten Sie.',
-        '<b>Ihre Gewinnchance ist am größten, wenn Sie den Schieberegler immer auf die Wahrscheinlichkeit stellen, die Sie selbst für zutreffend halten.</b> '
-        'Das gilt unabhängig davon, wie gern Sie Risiken eingehen.',
+        '<b>Ihre Gewinnchance ist am größten, wenn Sie den Schieberegler immer auf die Wahrscheinlichkeit stellen, die Sie selbst für zutreffend halten.</b>',
     ],
     'rule_h': 'Die genaue Regel',
     'rule': [
@@ -164,8 +163,7 @@ EN = {
         'In each round, one of your nine estimates is chosen at random (before the first spin or after any one of the 8 spins). '
         f'With this estimate you take part in a lottery for <b>{A["per_round"]}</b>. In total you can win up to <b>{A["max_belief"]}</b> this way.',
         'The closer your estimate is to the wheel that is the selected wheel of that round, the more winning tickets you receive.',
-        '<b>Your chance of winning is highest if you always set the slider to the probability that you yourself believe is correct.</b> '
-        'This holds regardless of how much you like or dislike risk.',
+        '<b>Your chance of winning is highest if you always set the slider to the probability that you yourself believe is correct.</b>',
     ],
     'rule_h': 'The exact rule',
     'rule': [
@@ -251,7 +249,7 @@ def page(T, kind):
 
 <h2>{T['slider_h']}</h2>
 {paras(T['slider'])}
-<img src="../img/slider.png" width="1210" height="465" alt="{T['img_slider']}">
+<img src="../img/slider.png" width="688" height="218" alt="{T['img_slider']}">
 <ul>
 {''.join(f'<li>{t}</li>' for t in T['slider_list'])}
 </ul>
