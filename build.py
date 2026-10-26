@@ -13,7 +13,10 @@ Amounts are fixed here (they are not piped from Qualtrics), so keep them in sync
 import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-AMOUNTS = {'show_up': '€6.00', 'questionnaire': '€3.00', 'per_round': '€2.00', 'max_belief': '€12.00', 'wheel_bonus': '€6.00'}
+AMOUNTS = {  # same numbers in both surveys; € in the German survey, $ in the English (US) survey
+    'de': {'show_up': '€6.00', 'questionnaire': '€3.00', 'per_round': '€2.00', 'max_belief': '€12.00', 'wheel_bonus': '€6.00'},
+    'en': {'show_up': '$6.00', 'questionnaire': '$3.00', 'per_round': '$2.00', 'max_belief': '$12.00', 'wheel_bonus': '$6.00'},
+}
 
 # Ticket examples: estimate for wheel A (%) -> winning tickets out of 10,000 if A / if B is the selected wheel
 EXAMPLES = [(p, 10000 - (p - 100) ** 2, 10000 - p ** 2) for p in (0, 20, 50, 80, 100)]
@@ -23,6 +26,7 @@ def fmt(n, sep):
     return f'{n:,}'.replace(',', sep)
 
 
+A = AMOUNTS['de']
 DE = {
     'lang': 'de',
     'title': 'Anleitung zum Experiment',
@@ -63,11 +67,11 @@ DE = {
         '<b>Anzeige:</b> Über dem Regler sehen Sie die Wahrscheinlichkeiten für Rad A und B. Sie ergeben immer zusammen 100%.',
     ],
     'pay_h': 'Auszahlung',
-    'pay_fixed': f'Sie erhalten eine Basiszahlung von <b>{AMOUNTS["show_up"]}</b> für die Teilnahme und zusätzliche <b>{AMOUNTS["questionnaire"]}</b> für das Ausfüllen des Fragebogens am Ende.',
+    'pay_fixed': f'Sie erhalten eine Basiszahlung von <b>{A["show_up"]}</b> für die Teilnahme und zusätzliche <b>{A["questionnaire"]}</b> für das Ausfüllen des Fragebogens am Ende.',
     'belief_h': 'Bonus für Ihre Wahrscheinlichkeitsschätzungen',
     'belief': [
         'In jeder Runde wird eine Ihrer neun Schätzungen zufällig ausgewählt (vor der ersten Drehung oder nach Drehung 1 bis 8). '
-        f'Mit dieser Schätzung nehmen Sie an einer Verlosung von <b>{AMOUNTS["per_round"]}</b> teil. Insgesamt können Sie so bis zu <b>{AMOUNTS["max_belief"]}</b> gewinnen.',
+        f'Mit dieser Schätzung nehmen Sie an einer Verlosung von <b>{A["per_round"]}</b> teil. Insgesamt können Sie so bis zu <b>{A["max_belief"]}</b> gewinnen.',
         'Je näher Ihre Schätzung an dem Rad liegt, das in dieser Runde das ausgewählte Rad ist, desto mehr Gewinnlose erhalten Sie.',
         '<b>Ihre Gewinnchance ist am größten, wenn Sie den Schieberegler immer auf die Wahrscheinlichkeit stellen, die Sie selbst für zutreffend halten.</b> '
         'Das gilt unabhängig davon, wie gern Sie Risiken eingehen.',
@@ -85,7 +89,7 @@ DE = {
     'bet_h': 'Bonus-Glücksrad',
     'bet': [
         'Zu Beginn jeder Runde wetten Sie, ob Rad A oder Rad B das ausgewählte Glücksrad dieser Runde ist. Sie schließen diese Wette in jeder Runde ab, also 6 Mal.',
-        f'Am Ende des Experiments wird eine Runde zufällig ausgewählt. Wenn Sie in dieser Runde auf das ausgewählte Rad gewettet haben, beträgt Ihr Bonus für das Glücksrad <b>{AMOUNTS["wheel_bonus"]}</b>.',
+        f'Am Ende des Experiments wird eine Runde zufällig ausgewählt. Wenn Sie in dieser Runde auf das ausgewählte Rad gewettet haben, beträgt Ihr Bonus für das Glücksrad <b>{A["wheel_bonus"]}</b>.',
     ],
     'own_h': 'Ihr Rad',
     'own': [
@@ -93,14 +97,14 @@ DE = {
         'Welches Rad das ist, wurde für Sie zufällig festgelegt und wird Ihnen im Experiment angezeigt.',
         'Dieses Rad ist <b>Ihr Rad</b>, wenn Ihr Ergebnis in den Musteraufgaben mindestens so gut war wie das der Hälfte der bisherigen Teilnehmenden; '
         'andernfalls ist das andere Rad Ihr Rad. Welches Rad Ihr Rad ist, erfahren Sie am Ende des Experiments.',
-        f'Am Ende des Experiments wird eine Runde zufällig ausgewählt. Wenn in dieser Runde Ihr Rad das ausgewählte Rad ist, beträgt Ihr Bonus für Ihr Rad <b>{AMOUNTS["wheel_bonus"]}</b>.',
+        f'Am Ende des Experiments wird eine Runde zufällig ausgewählt. Wenn in dieser Runde Ihr Rad das ausgewählte Rad ist, beträgt Ihr Bonus für Ihr Rad <b>{A["wheel_bonus"]}</b>.',
     ],
     'coin_ego': [
         'Am Ende des Experiments entscheidet ein Münzwurf, ob Ihnen <b>entweder</b> die Boni für Ihre Wahrscheinlichkeitsschätzungen <b>oder</b> der Bonus für Ihr Rad ausgezahlt wird. Sie erhalten nie beide.',
         'Deshalb lohnt es sich, bei den Schätzungen immer Ihre tatsächliche Einschätzung anzugeben, unabhängig davon, welches Rad Ihr Rad ist.',
     ],
     'rand_h': 'Zufallsbonus',
-    'rand': [f'Am Ende des Experiments wird außerdem ein Zufallsbonus von <b>{AMOUNTS["wheel_bonus"]}</b> verlost, den Sie mit einer Wahrscheinlichkeit von 50% gewinnen.'],
+    'rand': [f'Am Ende des Experiments wird außerdem ein Zufallsbonus von <b>{A["wheel_bonus"]}</b> verlost, den Sie mit einer Wahrscheinlichkeit von 50% gewinnen.'],
     'coin_ctrl': [
         'Am Ende des Experiments entscheidet ein Münzwurf, ob Ihnen <b>entweder</b> die Boni für Ihre Wahrscheinlichkeitsschätzungen <b>oder</b> der Zufallsbonus ausgezahlt wird. Sie erhalten nie beide.',
     ],
@@ -112,6 +116,7 @@ DE = {
     'end': 'Am Ende des Experiments teilen wir Ihnen mit, welches Rad in jeder Runde das ausgewählte Glücksrad war, und geben Ihnen eine Aufschlüsselung Ihrer gesamten Auszahlung.',
 }
 
+A = AMOUNTS['en']
 EN = {
     'lang': 'en',
     'title': 'Instructions for the experiment',
@@ -123,17 +128,17 @@ EN = {
         'Wheel B (the "yellow wheel") is three quarters yellow and one quarter green. '
         'This setup is very important for your decisions during the experiment.',
     ],
-    'img_wheels': 'Wheel A on the left with three green fields and one yellow field, wheel B on the right with three yellow fields and one green field',
+    'img_wheels': 'Wheel A on the left with three green fields and one yellow field, Wheel B on the right with three yellow fields and one green field',
     'covered': 'During the experiment the colored fields of the wheels are covered, as in the picture below.',
     'img_covered': 'The two wheels with their fields covered',
     'flow_h': 'How it works',
     'flow': [
-        'The experiment has 6 rounds. In each round there is a "selected wheel": either wheel A or wheel B. '
+        'The experiment has 6 rounds. In each round there is a "selected wheel": either Wheel A or Wheel B. '
         'Because the fields are covered, you cannot see which wheel is the selected wheel.',
         'In each round you see 8 spins. After each spin, the field that the red pointer at the top of the wheel points to is revealed. '
         'The sequence of spins was fixed in advance.',
         'Which wheel is the selected wheel of a round is determined at random by the computer, in line with the revealed fields: '
-        'the more green fields are revealed, the more likely wheel A is the selected wheel; the more yellow fields, the more likely wheel B. '
+        'the more green fields are revealed, the more likely Wheel A is the selected wheel; the more yellow fields, the more likely Wheel B. '
         'The probabilities are exactly the same as if one of the two wheels had been selected at random (50% – 50%) at the start of the round and then spun. '
         'So the revealed fields help you judge which wheel is the selected wheel.',
         'Because only one field is revealed at a time, a green or yellow field never tells you for certain which wheel is the selected one. '
@@ -142,21 +147,21 @@ EN = {
     'slider_h': 'The slider',
     'slider': [
         'Before the first spin and after every spin, you use a slider to tell us how likely you think it is that the selected wheel is '
-        'wheel A (green wheel) or wheel B (yellow wheel). Wheel A is shown to the left of the slider, wheel B to the right.',
+        'Wheel A (green wheel) or Wheel B (yellow wheel). Wheel A is shown to the left of the slider, Wheel B to the right.',
     ],
-    'img_slider': 'Slider between wheel A (left) and wheel B (right) showing "A: 50% - B: 50%"',
+    'img_slider': 'Slider between Wheel A (left) and Wheel B (right) showing “A: 50% - B: 50%”',
     'slider_list': [
         '<b>Middle:</b> both wheels are equally likely (50% each). You are completely unsure.',
-        '<b>To the left:</b> you think wheel A is more likely. The further left, the more certain you are. All the way left means "A: 100% - B: 0%".',
-        '<b>To the right:</b> you think wheel B is more likely. The further right, the more certain you are. All the way right means "A: 0% - B: 100%".',
-        '<b>Display:</b> above the slider you see the probabilities for wheel A and B. They always add up to 100%.',
+        '<b>To the left:</b> you think Wheel A is more likely. The further left, the more certain you are. All the way left means "A: 100% - B: 0%".',
+        '<b>To the right:</b> you think Wheel B is more likely. The further right, the more certain you are. All the way right means "A: 0% - B: 100%".',
+        '<b>Display:</b> above the slider you see the probabilities for Wheel A and B. They always add up to 100%.',
     ],
     'pay_h': 'Payment',
-    'pay_fixed': f'You receive a base payment of <b>{AMOUNTS["show_up"]}</b> for taking part and an additional <b>{AMOUNTS["questionnaire"]}</b> for completing the questionnaire at the end.',
+    'pay_fixed': f'You receive a base payment of <b>{A["show_up"]}</b> for taking part and an additional <b>{A["questionnaire"]}</b> for completing the questionnaire at the end.',
     'belief_h': 'Bonus for your probability estimates',
     'belief': [
-        'In each round, one of your nine estimates is chosen at random (before the first spin or after spin 1 to 8). '
-        f'With this estimate you take part in a lottery for <b>{AMOUNTS["per_round"]}</b>. In total you can win up to <b>{AMOUNTS["max_belief"]}</b> this way.',
+        'In each round, one of your nine estimates is chosen at random (before the first spin or after any one of the 8 spins). '
+        f'With this estimate you take part in a lottery for <b>{A["per_round"]}</b>. In total you can win up to <b>{A["max_belief"]}</b> this way.',
         'The closer your estimate is to the wheel that is the selected wheel of that round, the more winning tickets you receive.',
         '<b>Your chance of winning is highest if you always set the slider to the probability that you yourself believe is correct.</b> '
         'This holds regardless of how much you like or dislike risk.',
@@ -164,17 +169,17 @@ EN = {
     'rule_h': 'The exact rule',
     'rule': [
         'There are 10,000 tickets for the chosen estimate, of which 10,000 − (distance)² are winning tickets. '
-        'The distance is the difference in percentage points between your estimate for wheel A and 100 if wheel A is the selected wheel, '
-        'or 0 if wheel B is the selected wheel. Then one ticket is drawn.',
-        'Example: you reported 80% for wheel A. If wheel A is the selected wheel, the distance is 20, so 10,000 − 400 = 9,600 winning tickets (96%). '
-        'If wheel B is the selected wheel, the distance is 80, so 10,000 − 6,400 = 3,600 winning tickets (36%).',
+        'The distance is the difference in percentage points between your estimate for Wheel A and 100 if Wheel A is the selected wheel, '
+        'or 0 if Wheel B is the selected wheel. Then one ticket is drawn.',
+        'Example: you reported 80% for Wheel A. If Wheel A is the selected wheel, the distance is 20, so 10,000 − 400 = 9,600 winning tickets (96%). '
+        'If Wheel B is the selected wheel, the distance is 80, so 10,000 − 6,400 = 3,600 winning tickets (36%).',
     ],
-    'table_head': ('Your estimate for wheel A', 'Winning tickets if wheel A is selected', 'Winning tickets if wheel B is selected'),
+    'table_head': ('Your estimate for Wheel A', 'Winning tickets if Wheel A is selected', 'Winning tickets if Wheel B is selected'),
     'sep': ',',
     'bet_h': 'Bonus wheel',
     'bet': [
-        'At the start of each round you bet on whether wheel A or wheel B is the selected wheel of that round. You place this bet in every round, so 6 times.',
-        f'At the end of the experiment one round is chosen at random. If you bet on the selected wheel in that round, your bonus for the wheel is <b>{AMOUNTS["wheel_bonus"]}</b>.',
+        'At the start of each round you bet on whether Wheel A or Wheel B is the selected wheel of that round. You place this bet in every round, so 6 times.',
+        f'At the end of the experiment one round is chosen at random. If you bet on the selected wheel in that round, your bonus for the wheel is <b>{A["wheel_bonus"]}</b>.',
     ],
     'own_h': 'Your wheel',
     'own': [
@@ -182,14 +187,14 @@ EN = {
         'Which wheel this is was decided at random for you and is shown to you during the experiment.',
         'This wheel is <b>your wheel</b> if your result in the pattern tasks was at least as good as that of half of the earlier participants; '
         'otherwise the other wheel is your wheel. You find out which wheel is your wheel at the end of the experiment.',
-        f'At the end of the experiment one round is chosen at random. If your wheel is the selected wheel in that round, your bonus for your wheel is <b>{AMOUNTS["wheel_bonus"]}</b>.',
+        f'At the end of the experiment one round is chosen at random. If your wheel is the selected wheel in that round, your bonus for your wheel is <b>{A["wheel_bonus"]}</b>.',
     ],
     'coin_ego': [
         'At the end of the experiment a coin flip decides whether you are paid <b>either</b> the bonuses for your probability estimates <b>or</b> the bonus for your wheel. You never receive both.',
         'This is why it always pays to report your true estimate, regardless of which wheel is your wheel.',
     ],
     'rand_h': 'Random bonus',
-    'rand': [f'At the end of the experiment there is also a random bonus of <b>{AMOUNTS["wheel_bonus"]}</b>, which you win with a probability of 50%.'],
+    'rand': [f'At the end of the experiment there is also a random bonus of <b>{A["wheel_bonus"]}</b>, which you win with a probability of 50%.'],
     'coin_ctrl': [
         'At the end of the experiment a coin flip decides whether you are paid <b>either</b> the bonuses for your probability estimates <b>or</b> the random bonus. You never receive both.',
     ],
