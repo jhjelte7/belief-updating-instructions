@@ -64,7 +64,6 @@ DE = {
     ],
     'pay_h': 'Auszahlung',
     'pay_fixed': f'Sie erhalten eine Basiszahlung von <b>{AMOUNTS["show_up"]}</b> für die Teilnahme und zusätzliche <b>{AMOUNTS["questionnaire"]}</b> für das Ausfüllen des Fragebogens am Ende.',
-    'pay_fixed_bonus': f'Sie erhalten eine Basiszahlung von <b>{AMOUNTS["show_up"]}</b> für die Teilnahme.',
     'belief_h': 'Bonus für Ihre Wahrscheinlichkeitsschätzungen',
     'belief': [
         'In jeder Runde wird eine Ihrer neun Schätzungen zufällig ausgewählt (vor der ersten Drehung oder nach Drehung 1 bis 8). '
@@ -138,7 +137,6 @@ EN = {
     ],
     'pay_h': 'Payment',
     'pay_fixed': f'You receive a base payment of <b>{AMOUNTS["show_up"]}</b> for taking part and an additional <b>{AMOUNTS["questionnaire"]}</b> for completing the questionnaire at the end.',
-    'pay_fixed_bonus': f'You receive a base payment of <b>{AMOUNTS["show_up"]}</b> for taking part.',
     'belief_h': 'Bonus for your probability estimates',
     'belief': [
         'In each round, one of your nine estimates is chosen at random (before the first spin or after spin 1 to 8). '
@@ -217,7 +215,7 @@ def page(T, bonus):
 </ul>
 
 {bet}<h2>{T['pay_h']}</h2>
-<p>{T['pay_fixed_bonus'] if bonus else T['pay_fixed']}</p>
+<p>{T['pay_fixed']}</p>
 <h3>{T['belief_h']}</h3>
 {paras(T['belief'])}
 <h3>{T['rule_h']}</h3>
