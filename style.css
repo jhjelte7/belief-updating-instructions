@@ -50,8 +50,6 @@ img {
 
 a { color: var(--accent); }
 
-.lang { text-align: right; font-size: 0.95rem; }
-
 .table-wrap { overflow-x: auto; margin: 12px 0 8px; }
 
 table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
@@ -59,5 +57,3 @@ table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
 th, td { border: 1px solid var(--line); padding: 6px 10px; text-align: center; }
 
 th { background: var(--head); font-weight: 600; }
-
-.choose { list-style: none; padding: 0; display: flex; gap: 16px; font-size: 1.15rem; }

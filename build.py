@@ -24,7 +24,7 @@ def fmt(n, sep):
 
 
 DE = {
-    'lang': 'de', 'other_lang': 'English',
+    'lang': 'de',
     'title': 'Anleitung zum Experiment',
     'title_bonus': 'Anleitung zum Experiment (mit Bonus-Glücksrad)',
     'intro_h': 'Die beiden Glücksräder',
@@ -87,6 +87,18 @@ DE = {
         'Zu Beginn jeder Runde wetten Sie, ob Rad A oder Rad B das ausgewählte Glücksrad dieser Runde ist. Sie schließen diese Wette in jeder Runde ab, also 6 Mal.',
         f'Am Ende des Experiments wird eine Runde zufällig ausgewählt. Wenn Sie in dieser Runde auf das ausgewählte Rad gewettet haben, beträgt Ihr Bonus für das Glücksrad <b>{AMOUNTS["wheel_bonus"]}</b>.',
     ],
+    'own_h': 'Ihr Rad',
+    'own': [
+        'Zu Beginn des Experiments haben Sie 9 Musteraufgaben gelöst. Eines der beiden Glücksräder ist das <b>Rad der besseren Hälfte</b>. '
+        'Welches Rad das ist, wurde für Sie zufällig festgelegt und wird Ihnen im Experiment angezeigt.',
+        'Dieses Rad ist <b>Ihr Rad</b>, wenn Ihr Ergebnis in den Musteraufgaben mindestens so gut war wie das der Hälfte der bisherigen Teilnehmenden; '
+        'andernfalls ist das andere Rad Ihr Rad. Welches Rad Ihr Rad ist, erfahren Sie am Ende des Experiments.',
+        f'Am Ende des Experiments wird eine Runde zufällig ausgewählt. Wenn in dieser Runde Ihr Rad das ausgewählte Rad ist, beträgt Ihr Bonus für Ihr Rad <b>{AMOUNTS["wheel_bonus"]}</b>.',
+    ],
+    'coin_ego': [
+        'Am Ende des Experiments entscheidet ein Münzwurf, ob Ihnen <b>entweder</b> die Boni für Ihre Wahrscheinlichkeitsschätzungen <b>oder</b> der Bonus für Ihr Rad ausgezahlt wird. Sie erhalten nie beide.',
+        'Deshalb lohnt es sich, bei den Schätzungen immer Ihre tatsächliche Einschätzung anzugeben, unabhängig davon, welches Rad Ihr Rad ist.',
+    ],
     'rand_h': 'Zufallsbonus',
     'rand': [f'Am Ende des Experiments wird außerdem ein Zufallsbonus von <b>{AMOUNTS["wheel_bonus"]}</b> verlost, den Sie mit einer Wahrscheinlichkeit von 50% gewinnen.'],
     'coin_ctrl': [
@@ -98,11 +110,10 @@ DE = {
         'Deshalb lohnt es sich, bei den Schätzungen immer Ihre tatsächliche Einschätzung anzugeben, unabhängig davon, auf welches Rad Sie gewettet haben.',
     ],
     'end': 'Am Ende des Experiments teilen wir Ihnen mit, welches Rad in jeder Runde das ausgewählte Glücksrad war, und geben Ihnen eine Aufschlüsselung Ihrer gesamten Auszahlung.',
-    'choose': 'Bitte wählen Sie Ihre Sprache',
 }
 
 EN = {
-    'lang': 'en', 'other_lang': 'Deutsch',
+    'lang': 'en',
     'title': 'Instructions for the experiment',
     'title_bonus': 'Instructions for the experiment (with bonus wheel)',
     'intro_h': 'The two wheels of fortune',
@@ -165,6 +176,18 @@ EN = {
         'At the start of each round you bet on whether wheel A or wheel B is the selected wheel of that round. You place this bet in every round, so 6 times.',
         f'At the end of the experiment one round is chosen at random. If you bet on the selected wheel in that round, your bonus for the wheel is <b>{AMOUNTS["wheel_bonus"]}</b>.',
     ],
+    'own_h': 'Your wheel',
+    'own': [
+        'At the start of the experiment you solved 9 pattern tasks. One of the two wheels is the <b>wheel of the better half</b>. '
+        'Which wheel this is was decided at random for you and is shown to you during the experiment.',
+        'This wheel is <b>your wheel</b> if your result in the pattern tasks was at least as good as that of half of the earlier participants; '
+        'otherwise the other wheel is your wheel. You find out which wheel is your wheel at the end of the experiment.',
+        f'At the end of the experiment one round is chosen at random. If your wheel is the selected wheel in that round, your bonus for your wheel is <b>{AMOUNTS["wheel_bonus"]}</b>.',
+    ],
+    'coin_ego': [
+        'At the end of the experiment a coin flip decides whether you are paid <b>either</b> the bonuses for your probability estimates <b>or</b> the bonus for your wheel. You never receive both.',
+        'This is why it always pays to report your true estimate, regardless of which wheel is your wheel.',
+    ],
     'rand_h': 'Random bonus',
     'rand': [f'At the end of the experiment there is also a random bonus of <b>{AMOUNTS["wheel_bonus"]}</b>, which you win with a probability of 50%.'],
     'coin_ctrl': [
@@ -176,40 +199,39 @@ EN = {
         'This is why it always pays to report your true estimate, regardless of which wheel you bet on.',
     ],
     'end': 'At the end of the experiment we tell you which wheel was the selected wheel in each round and give you a breakdown of your total payment.',
-    'choose': 'Please choose your language',
 }
 
-PAGES = {'de': ('index.html', 'bonusrad.html'), 'en': ('index.html', 'bonus-wheel.html')}
+# One stand-alone page per language and treatment; the survey links to the page of its
+# language and treatment (no language switch on the pages).
+PAGES = {'de': {'std': 'index.html', 'bonus': 'bonusrad.html', 'ego': 'ego.html'},
+         'en': {'std': 'index.html', 'bonus': 'bonus-wheel.html', 'ego': 'ego.html'}}
 
 
 def paras(items):
     return '\n'.join(f'<p>{t}</p>' for t in items)
 
 
-def page(T, bonus):
-    other = EN if T is DE else DE
-    std, bon = PAGES[T['lang']]
-    o_std, o_bon = PAGES[other['lang']]
-    switch = f'../{other["lang"]}/{o_bon if bonus else o_std}'
+def page(T, kind):
     rows = '\n'.join(f'<tr><td>{p}%</td><td>{fmt(a, T["sep"])} ({a // 100}%)</td><td>{fmt(b, T["sep"])} ({b // 100}%)</td></tr>' for p, a, b in EXAMPLES)
     th = ''.join(f'<th scope="col">{h}</th>' for h in T['table_head'])
-    bet = f'<h2>{T["bet_h"]}</h2>\n{paras(T["bet"])}\n' if bonus else ''
-    if bonus:
-        coin = f'<h3>{T["coin_h"]}</h3>\n{paras(T["coin"])}\n'
-    else:
-        coin = f'<h3>{T["rand_h"]}</h3>\n{paras(T["rand"])}\n<h3>{T["coin_h"]}</h3>\n{paras(T["coin_ctrl"])}\n'
+    title = T['title_bonus'] if kind == 'bonus' else T['title']
+    stake = {'bonus': f'<h2>{T["bet_h"]}</h2>\n{paras(T["bet"])}\n',
+             'ego': f'<h2>{T["own_h"]}</h2>\n{paras(T["own"])}\n'}.get(kind, '')
+    coin = {'bonus': f'<h3>{T["coin_h"]}</h3>\n{paras(T["coin"])}\n',
+            'ego': f'<h3>{T["coin_h"]}</h3>\n{paras(T["coin_ego"])}\n'}.get(
+        kind, f'<h3>{T["rand_h"]}</h3>\n{paras(T["rand"])}\n<h3>{T["coin_h"]}</h3>\n{paras(T["coin_ctrl"])}\n')
+    bonus = stake  # placed before the payment section, as on the bonus-wheel page
     return f'''<!doctype html>
 <html lang="{T['lang']}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{T['title_bonus'] if bonus else T['title']}</title>
+<title>{title}</title>
 <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 <main>
-<nav class="lang"><a href="{switch}" hreflang="{other['lang']}" lang="{other['lang']}">{T['other_lang']}</a></nav>
-<h1>{T['title_bonus'] if bonus else T['title']}</h1>
+<h1>{title}</h1>
 
 <h2>{T['intro_h']}</h2>
 {paras(T['intro'])}
@@ -227,7 +249,7 @@ def page(T, bonus):
 {''.join(f'<li>{t}</li>' for t in T['slider_list'])}
 </ul>
 
-{bet}<h2>{T['pay_h']}</h2>
+{bonus}<h2>{T['pay_h']}</h2>
 <p>{T['pay_fixed']}</p>
 <h3>{T['belief_h']}</h3>
 {paras(T['belief'])}
@@ -247,23 +269,18 @@ def page(T, bonus):
 
 
 def index():
+    # The site root only forwards to the German standard page; the survey links to pages directly.
     return f'''<!doctype html>
 <html lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{DE['title']} / {EN['title']}</title>
-<link rel="stylesheet" href="style.css">
+<meta http-equiv="refresh" content="0; url=de/">
+<title>{DE['title']}</title>
+<link rel="canonical" href="de/">
 </head>
 <body>
-<main>
-<h1>{DE['title']}</h1>
-<p>{DE['choose']} / <span lang="en">{EN['choose']}</span>:</p>
-<ul class="choose">
-<li><a href="de/" hreflang="de">Deutsch</a></li>
-<li><a href="en/" hreflang="en" lang="en">English</a></li>
-</ul>
-</main>
+<p><a href="de/">{DE['title']}</a></p>
 </body>
 </html>
 '''
@@ -272,9 +289,8 @@ def index():
 def main():
     out = {'index.html': index()}
     for T in (DE, EN):
-        std, bon = PAGES[T['lang']]
-        out[f'{T["lang"]}/{std}'] = page(T, False)
-        out[f'{T["lang"]}/{bon}'] = page(T, True)
+        for kind, name in PAGES[T['lang']].items():
+            out[f'{T["lang"]}/{name}'] = page(T, kind)
     for rel, html in out.items():
         path = os.path.join(HERE, rel)
         os.makedirs(os.path.dirname(path), exist_ok=True)
