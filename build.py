@@ -121,10 +121,10 @@ EN = {
         'In this experiment we use two different "wheels of fortune". Each wheel is divided evenly into four fields. '
         'Wheel A (the "green wheel") is three quarters green and one quarter yellow. '
         'Wheel B (the "yellow wheel") is three quarters yellow and one quarter green. '
-        'This set-up is very important for your decisions during the experiment.',
+        'This setup is very important for your decisions during the experiment.',
     ],
     'img_wheels': 'Wheel A on the left with three green fields and one yellow field, wheel B on the right with three yellow fields and one green field',
-    'covered': 'During the experiment the coloured fields of the wheels are covered, as in the picture below.',
+    'covered': 'During the experiment the colored fields of the wheels are covered, as in the picture below.',
     'img_covered': 'The two wheels with their fields covered',
     'flow_h': 'How it works',
     'flow': [
