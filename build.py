@@ -80,7 +80,8 @@ DE = {
     'rule': [
         'Für die ausgewählte Schätzung gibt es 10.000 Lose. Davon sind 10.000 − (Abstand)² Gewinnlose. '
         'Der Abstand ist der Unterschied in Prozentpunkten zwischen Ihrer Schätzung für Rad A und 100, wenn Rad A das ausgewählte Rad ist, '
-        'bzw. 0, wenn Rad B das ausgewählte Rad ist. Dann wird ein Los gezogen.',
+        'bzw. 0, wenn Rad B das ausgewählte Rad ist. Dann wird ein Los gezogen. '
+        f'Ist das gezogene Los ein Gewinnlos, erhalten Sie <b>{A["per_round"]}</b>; andernfalls nichts.',
         'Beispiel: Sie haben 80% für Rad A angegeben. Ist Rad A das ausgewählte Rad, beträgt der Abstand 20, also 10.000 − 400 = 9.600 Gewinnlose (96%). '
         'Ist Rad B das ausgewählte Rad, beträgt der Abstand 80, also 10.000 − 6.400 = 3.600 Gewinnlose (36%).',
     ],
@@ -170,7 +171,8 @@ EN = {
     'rule': [
         'There are 10,000 tickets for the chosen estimate, of which 10,000 − (distance)² are winning tickets. '
         'The distance is the difference in percentage points between your estimate for Wheel A and 100 if Wheel A is the selected wheel, '
-        'or 0 if Wheel B is the selected wheel. Then one ticket is drawn.',
+        'or 0 if Wheel B is the selected wheel. Then one ticket is drawn. '
+        f'If the ticket drawn is a winning ticket, you receive <b>{A["per_round"]}</b>; otherwise nothing.',
         'Example: you reported 80% for Wheel A. If Wheel A is the selected wheel, the distance is 20, so 10,000 − 400 = 9,600 winning tickets (96%). '
         'If Wheel B is the selected wheel, the distance is 80, so 10,000 − 6,400 = 3,600 winning tickets (36%).',
     ],
