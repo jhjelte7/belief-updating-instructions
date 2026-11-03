@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Instructions for the experiment — BDM</title>
+<meta name="description" content="Instructions for the wheel experiment, with a two-option probability-estimate bonus.">
+<link rel="stylesheet" href="../style.css">
+<style>
+.options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 16px 0; }
+.option { padding: 16px; border: 1px solid var(--line); border-radius: 6px; }
+.option h4 { font-size: 1rem; margin: 0 0 8px; }
+.option p { margin: 0; }
+.reminder { border-left: 3px solid var(--accent); padding: 10px 16px; background: var(--head); }
+details { border-bottom: 1px solid var(--line); padding: 12px 0; }
+summary { cursor: pointer; font-weight: 600; }
+summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+details p { margin: 10px 0 0; }
+.practice-intro { color: var(--muted); }
+@media (max-width: 520px) { .options { grid-template-columns: 1fr; } }
+@media print { .options, tr { break-inside: avoid; } details::details-content { content-visibility: visible; } }
+</style>
+</head>
+<body>
+<main>
+<h1>Instructions for the experiment</h1>
+
+<h2>The two wheels of fortune</h2>
+<p>In this experiment we use two different "wheels of fortune". Each wheel is divided evenly into four fields. Wheel A (the "green wheel") is three quarters green and one quarter yellow. Wheel B (the "yellow wheel") is three quarters yellow and one quarter green. This setup is very important for your decisions during the experiment.</p>
+<img src="../img/wheels.png" width="1259" height="894" alt="Wheel A on the left with three green fields and one yellow field, Wheel B on the right with three yellow fields and one green field">
+<p>During the experiment the colored fields of the wheels are covered, as in the picture below.</p>
+<img src="../img/wheels-covered.png" width="746" height="524" alt="The two wheels with their fields covered">
+
+<h2>How it works</h2>
+<p>The experiment has 6 rounds. In each round there is a "selected wheel": either Wheel A or Wheel B. Because the fields are covered, you cannot see which wheel is the selected wheel.</p>
+<p>In each round you see 8 spins. After each spin, the field that the red pointer at the top of the wheel points to is revealed. The sequence of spins was fixed in advance.</p>
+<p>Which wheel is the selected wheel of a round is determined at random by the computer, in line with the revealed fields: the more green fields are revealed, the more likely Wheel A is the selected wheel; the more yellow fields, the more likely Wheel B. The probabilities are exactly the same as if one of the two wheels had been selected at random (50% – 50%) at the start of the round and then spun. So the revealed fields help you judge which wheel is the selected wheel.</p>
+<p>Because only one field is revealed at a time, a green or yellow field never tells you for certain which wheel is the selected one. The pointer may also point to the same field several times; you do not know whether that is the case.</p>
+
+<h2>The slider</h2>
+<p>Before the first spin and after every spin, you use a slider to tell us how likely you think it is that the selected wheel is Wheel A (green wheel) or Wheel B (yellow wheel). Wheel A is shown to the left of the slider, Wheel B to the right.</p>
+<img src="../img/slider.png" width="688" height="218" alt="Slider between Wheel A (left) and Wheel B (right) showing “A: 50% - B: 50%”">
+<ul>
+<li><b>Middle:</b> you think both wheels are equally likely (50% each).</li><li><b>To the left:</b> you think Wheel A is more likely. The further left, the more certain you are. All the way left means "A: 100% - B: 0%".</li><li><b>To the right:</b> you think Wheel B is more likely. The further right, the more certain you are. All the way right means "A: 0% - B: 100%".</li><li><b>Display:</b> above the slider you see the probabilities for Wheel A and B. They always add up to 100%.</li>
+</ul>
+
+<h2 id="payment">Payment</h2>
+<p>You receive a base payment of <b>$6.00</b> for taking part and an additional <b>$3.00</b> for completing the questionnaire at the end.</p>
+<p>At the end, the computer randomly selects <b>one of the six rounds</b>. Each round has the same chance of being selected. Only this round counts for your bonus.</p>
+<p>A <b>fair coin flip</b> decides which of the following two bonuses is paid. Each has a 50% chance of being chosen. You never receive both.</p>
+<ul>
+<li><b>Bonus for your probability estimate:</b> one of your estimates in the selected round is used as explained below.</li>
+<li><b>Random bonus:</b> a separate lottery gives you a 50% chance of receiving $10.00, and otherwise pays $0.</li>
+</ul>
+<p>Either bonus can pay $10.00 or $0. Your total payment, including participation and the completed questionnaire, is therefore $19.00 or $9.00.</p>
+
+<h3 id="estimate-bonus">Bonus for your probability estimate</h3>
+<p>If the coin selects this bonus, <b>one of your nine estimates</b> in the selected round is chosen at random. Each estimate has the same chance of being chosen, including your estimate before the first spin.</p>
+<p>There are two ways to win $10.00:</p>
+<div class="options">
+<div class="option">
+<h4>Wheel option</h4>
+<p>You receive <b>$10.00 if Wheel A is the selected wheel</b> in that round. If it is Wheel B, you receive $0.</p>
+</div>
+<div class="option">
+<h4>Lottery option</h4>
+<p>You receive <b>$10.00 with a given chance</b>, and $0 otherwise. This lottery does not depend on which wheel is selected.</p>
+</div>
+</div>
+<p><b>Your estimate tells the computer which option to use.</b></p>
+<p>The computer draws a random percentage between 0% and 100%, with all values equally likely. This is the lottery's chance of winning. Your answer does not change this draw, and the draw does not depend on which wheel is selected.</p>
+<ul>
+<li>If <b>your estimate for Wheel A is higher</b> than the lottery chance, the computer uses the <b>wheel option</b>.</li>
+<li>If <b>the lottery chance is higher</b> than your estimate, the computer uses the <b>lottery option</b>, with the chance it drew. A separate random draw then decides whether you win.</li>
+<li>If they are equal, the computer uses the wheel option.</li>
+</ul>
+
+<h3>An example</h3>
+<p>Suppose you report <b>A: 70% — B: 30%</b>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">The computer draws</th><th scope="col">Option used</th><th scope="col">How you win $10.00</th></tr></thead>
+<tbody>
+<tr><th scope="row">40%</th><td>Wheel option</td><td>You win if Wheel A is the selected wheel. If it is Wheel B, you receive $0.</td></tr>
+<tr><th scope="row">90%</th><td>Lottery option</td><td>You have a 90% chance of winning, whichever wheel is selected.</td></tr>
+</tbody>
+</table></div>
+<p>The 70% in this example is just an example, not a suggested answer.</p>
+
+<h3>Why give your own best estimate?</h3>
+<p>Your own best estimate makes the computer use the option that, according to your estimate, gives you the greater chance of winning. If the chances are equal, either option is equally good. Reporting a higher or lower number can make it use the option you think is worse.</p>
+<p class="reminder"><b>Report your own best estimate to give yourself the best overall chance of winning the $10.00 bonus.</b></p>
+
+<h2>Check your understanding</h2>
+<p class="practice-intro">Optional practice: try each question, then open it to see the answer. These practice questions do not count for payment.</p>
+<p>Suppose an example answer is <b>A: 60% — B: 40%</b>. The first four questions concern the bonus for this estimate.</p>
+<details><summary>The computer draws 30%. Which option is used?</summary><p>The wheel option. Your estimate of 60% is higher than 30%. You receive $10.00 if the selected wheel is A, and $0 if it is B.</p></details>
+<details><summary>The computer draws 80%. What is your chance of winning $10.00?</summary><p>80%. The lottery option is used because 80% is higher than your estimate of 60%. The lottery uses the percentage drawn by the computer, not your estimate.</p></details>
+<details><summary>With the 80% lottery, can you win if Wheel B is selected?</summary><p>Yes. The lottery result does not depend on which wheel is selected.</p></details>
+<details><summary>Can changing your answer change the percentage the computer draws?</summary><p>No. Your answer can change which option is used, but it does not change the random percentage.</p></details>
+<details><summary>Can both the estimate bonus and the random bonus be paid?</summary><p>No. The fair coin flip selects only one of these two bonuses.</p></details>
+
+<h2>At the end</h2>
+<p>At the end of the experiment we tell you which wheel was the selected wheel in each round and give you a breakdown of your total payment.</p>
+</main>
+</body>
+</html>
