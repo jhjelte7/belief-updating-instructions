@@ -3,7 +3,6 @@
 Uses the standard treatment's shared content and amounts from build.py.
 This adds an instruction page; it does not change survey payment code or links.
 """
-from decimal import Decimal
 from pathlib import Path
 
 from build import AMOUNTS, EN, paras
@@ -13,38 +12,14 @@ def page():
     amount = AMOUNTS['en']
     prize = amount['per_round']
     assert prize == amount['wheel_bonus'], 'This page assumes equal prizes for both bonuses.'
-    fixed = sum(Decimal(amount[key].removeprefix('$')) for key in ('show_up', 'questionnaire'))
-    total_low = f'${fixed:.2f}'
-    total_high = f'${fixed + Decimal(prize.removeprefix("$")):.2f}'
     slider_items = list(EN['slider_list'])
     slider_items[0] = '<b>Middle:</b> you think both wheels are equally likely (50% each).'
-    practice = [
-        (
-            'The computer draws 30%. Which option is used?',
-            f'The wheel option. Your estimate of 60% is higher than 30%. You receive {prize} '
-            'if the selected wheel is A, and $0 if it is B.',
-        ),
-        (
-            f'The computer draws 80%. What is your chance of winning {prize}?',
-            '80%. The lottery option is used because 80% is higher than your estimate of 60%. '
-            'The lottery uses the percentage drawn by the computer, not your estimate.',
-        ),
-        (
-            'With the 80% lottery, can you win if Wheel B is selected?',
-            'Yes. The lottery result does not depend on which wheel is selected.',
-        ),
-        (
-            'Can changing your answer change the percentage the computer draws?',
-            'No. Your answer can change which option is used, but it does not change the random percentage.',
-        ),
-        (
-            'Can both the estimate bonus and the random bonus be paid?',
-            'No. The fair coin flip selects only one of these two bonuses.',
-        ),
-    ]
-    answers = '\n'.join(
-        f'<details><summary>{question}</summary><p>{answer}</p></details>'
-        for question, answer in practice
+    choice_rows = '\n'.join(
+        f'<tr><th scope="row">{chance}%</th>'
+        f'<td>{prize} if Wheel A is selected</td>'
+        f'<td>{chance}% chance of {prize}</td>'
+        f'<td><b>{"Wheel option" if chance <= 70 else "Lottery option"}</b></td></tr>'
+        for chance in range(101)
     )
     return f'''<!doctype html>
 <html lang="en">
@@ -59,14 +34,16 @@ def page():
 .option {{ padding: 16px; border: 1px solid var(--line); border-radius: 6px; }}
 .option h4 {{ font-size: 1rem; margin: 0 0 8px; }}
 .option p {{ margin: 0; }}
-.reminder {{ border-left: 3px solid var(--accent); padding: 10px 16px; background: var(--head); }}
-details {{ border-bottom: 1px solid var(--line); padding: 12px 0; }}
+.choice-list {{ border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; margin: 20px 0; }}
 summary {{ cursor: pointer; font-weight: 600; }}
 summary:focus-visible {{ outline: 2px solid var(--accent); outline-offset: 4px; }}
-details p {{ margin: 10px 0 0; }}
-.practice-intro {{ color: var(--muted); }}
+.mpl-scroll {{ max-height: 400px; overflow: auto; margin-top: 14px; }}
+.mpl-scroll:focus-visible {{ outline: 2px solid var(--accent); outline-offset: 2px; }}
+.mpl-scroll table {{ min-width: 520px; }}
+.mpl-scroll thead th {{ position: sticky; top: 0; z-index: 1; }}
+.mpl-scroll caption {{ text-align: left; font-weight: 600; padding-bottom: 10px; }}
 @media (max-width: 520px) {{ .options {{ grid-template-columns: 1fr; }} }}
-@media print {{ .options, tr {{ break-inside: avoid; }} details::details-content {{ content-visibility: visible; }} }}
+@media print {{ .options, tr {{ break-inside: avoid; }} .mpl-scroll {{ max-height: none; overflow: visible; }} }}
 </style>
 </head>
 <body>
@@ -91,16 +68,11 @@ details p {{ margin: 10px 0 0; }}
 
 <h2 id="payment">Payment</h2>
 <p>{EN['pay_fixed']}</p>
-<p>At the end, the computer randomly selects <b>one of the six rounds</b>. Each round has the same chance of being selected. Only this round counts for your bonus.</p>
-<p>A <b>fair coin flip</b> decides which of the following two bonuses is paid. Each has a 50% chance of being chosen. You never receive both.</p>
-<ul>
-<li><b>Bonus for your probability estimate:</b> one of your estimates in the selected round is used as explained below.</li>
-<li><b>Random bonus:</b> a separate lottery gives you a 50% chance of receiving {amount['wheel_bonus']}, and otherwise pays $0.</li>
-</ul>
-<p>Either bonus can pay {prize} or $0. Your total payment, including participation and the completed questionnaire, is therefore {total_high} or {total_low}.</p>
-
 <h3 id="estimate-bonus">Bonus for your probability estimate</h3>
-<p>If the coin selects this bonus, <b>one of your nine estimates</b> in the selected round is chosen at random. Each estimate has the same chance of being chosen, including your estimate before the first spin.</p>
+<p>At the end of the experiment, <b>one of the six rounds</b> is chosen at random. In that round, <b>one of your nine estimates</b> is chosen at random: before the first spin or after any of the eight spins. Each round and each estimate within it has the same chance of being chosen. The chosen estimate is used for a chance to win <b>{prize}</b>.</p>
+<p><b>Your chance of winning is highest if you always set the slider to the probability that you yourself believe is correct.</b></p>
+
+<h3>The payment rule</h3>
 <p>There are two ways to win {prize}:</p>
 <div class="options">
 <div class="option">
@@ -130,17 +102,27 @@ details p {{ margin: 10px 0 0; }}
 </tbody>
 </table></div>
 <p>The 70% in this example is just an example, not a suggested answer.</p>
-
-<h3>Why give your own best estimate?</h3>
 <p>Your own best estimate makes the computer use the option that, according to your estimate, gives you the greater chance of winning. If the chances are equal, either option is equally good. Reporting a higher or lower number can make it use the option you think is worse.</p>
-<p class="reminder"><b>Report your own best estimate to give yourself the best overall chance of winning the {prize} bonus.</b></p>
 
-<h2>Check your understanding</h2>
-<p class="practice-intro">Optional practice: try each question, then open it to see the answer. These practice questions do not count for payment.</p>
-<p>Suppose an example answer is <b>A: 60% — B: 40%</b>. The first four questions concern the bonus for this estimate.</p>
-{answers}
+<details class="choice-list">
+<summary>See the full choice list for the 70% example</summary>
+<p>This list illustrates the payment rule at whole percentages. For an estimate of 70%, the wheel option is used through 70%; above 70%, the lottery option is used. Your estimate fills in these choices automatically.</p>
+<p>The computer's random percentage can also fall between the whole percentages shown. Both options pay $0 when you do not win.</p>
+<div class="mpl-scroll" tabindex="0" role="region" aria-label="Choice list for a 70 percent estimate; scroll to see all lottery chances">
+<table>
+<caption>Your estimate: A 70% — B 30%</caption>
+<thead><tr><th scope="col">Lottery chance</th><th scope="col">Wheel option</th><th scope="col">Lottery option</th><th scope="col">Option used</th></tr></thead>
+<tbody>
+{choice_rows}
+</tbody>
+</table>
+</div>
+</details>
 
-<h2>At the end</h2>
+<h3>{EN['rand_h']}</h3>
+{paras(EN['rand'])}
+<h3>{EN['coin_h']}</h3>
+<p>At the end of the experiment, a fair coin flip decides whether you are paid <b>either</b> the bonus for your probability estimate <b>or</b> the random bonus. Each has a 50% chance of being chosen. You never receive both.</p>
 <p>{EN['end']}</p>
 </main>
 </body>
