@@ -208,6 +208,35 @@ EN = {
     'end': 'At the end of the experiment we tell you which wheel was the selected wheel in each round and give you a breakdown of your total payment.',
 }
 
+# The English standard page uses a 100-ticket illustration of the same exact
+# quadratic probabilities. Fractional ticket totals must not be rounded.
+EN_STANDARD_RQSR = {
+    'ticket_total': 100,
+    'rule_h': 'The payment rule',
+    'rule': [
+        'Your estimate and the selected wheel determine your chance of winning. '
+        'Think of this chance as <b>winning tickets out of 100</b>: each winning ticket represents a 1% chance of winning.',
+        'The computer calculates the distance between your estimate for Wheel A and 100 if Wheel A is selected, '
+        'or 0 if Wheel B is selected. The distance is measured in percentage points.',
+        '<b>Winning tickets = 100 − (distance × distance) ÷ 100.</b>',
+        'Decimal values are kept: for example, 51.25 winning tickets means a 51.25% chance of winning. '
+        f'The computer uses this exact chance to decide whether you win <b>{AMOUNTS["en"]["per_round"]}</b>. If you do not win, you receive $0.',
+    ],
+    'table_head': ('Your estimate for Wheel A', 'Winning tickets out of 100 if Wheel A is selected', 'Winning tickets out of 100 if Wheel B is selected'),
+    'worked_example': f'''<h3>An example</h3>
+<p>Suppose you report <b>A: 70% — B: 30%</b>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Selected wheel</th><th scope="col">Winning tickets out of 100</th><th scope="col">Chance of winning {AMOUNTS['en']['per_round']}</th></tr></thead>
+<tbody>
+<tr><th scope="row">Wheel A</th><td>The distance is 30.<br>100 − (30 × 30) ÷ 100 = <b>91.00</b></td><td><b>91.00%</b></td></tr>
+<tr><th scope="row">Wheel B</th><td>The distance is 70.<br>100 − (70 × 70) ÷ 100 = <b>51.00</b></td><td><b>51.00%</b></td></tr>
+</tbody>
+</table></div>
+<p>The 70% in this example is just an example, not a suggested answer.</p>
+<h3>Other examples</h3>
+''',
+}
+
 # One stand-alone page per language and treatment; the survey links to the page of its
 # language and treatment (no language switch on the pages).
 PAGES = {'de': {'std': 'index.html', 'bonus': 'bonusrad.html', 'ego': 'ego.html'},
@@ -219,7 +248,12 @@ def paras(items):
 
 
 def page(T, kind):
-    rows = '\n'.join(f'<tr><td>{p}%</td><td>{fmt(a, T["sep"])} ({a // 100}%)</td><td>{fmt(b, T["sep"])} ({b // 100}%)</td></tr>' for p, a, b in EXAMPLES)
+    if T['lang'] == 'en' and kind == 'std':
+        T = {**T, **EN_STANDARD_RQSR}
+    if T.get('ticket_total') == 100:
+        rows = '\n'.join(f'<tr><td>{p}%</td><td>{a / 100:.2f} ({a / 100:.2f}%)</td><td>{b / 100:.2f} ({b / 100:.2f}%)</td></tr>' for p, a, b in EXAMPLES)
+    else:
+        rows = '\n'.join(f'<tr><td>{p}%</td><td>{fmt(a, T["sep"])} ({a // 100}%)</td><td>{fmt(b, T["sep"])} ({b // 100}%)</td></tr>' for p, a, b in EXAMPLES)
     th = ''.join(f'<th scope="col">{h}</th>' for h in T['table_head'])
     title = T['title_bonus'] if kind == 'bonus' else T['title']
     stake = {'bonus': f'<h2>{T["bet_h"]}</h2>\n{paras(T["bet"])}\n',
@@ -262,7 +296,7 @@ def page(T, kind):
 {paras(T['belief'])}
 <h3>{T['rule_h']}</h3>
 {paras(T['rule'])}
-<div class="table-wrap"><table>
+{T.get('worked_example', '')}<div class="table-wrap"><table>
 <thead><tr>{th}</tr></thead>
 <tbody>
 {rows}
