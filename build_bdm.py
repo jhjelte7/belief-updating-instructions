@@ -14,12 +14,22 @@ def page():
     assert prize == amount['wheel_bonus'], 'This page assumes equal prizes for both bonuses.'
     slider_items = list(EN['slider_list'])
     slider_items[0] = '<b>Middle:</b> you think both wheels are equally likely (50% each).'
+    general_rows = '\n'.join(
+        '<tr class="omitted-rows"><td colspan="3" aria-label="Intermediate rows omitted">…</td></tr>'
+        if chance is None else
+        f'<tr><th scope="row">{chance}%</th>'
+        f'<td>{prize} if Wheel A is selected</td>'
+        f'<td>{chance}% chance of {prize}</td></tr>'
+        for chance in (1, 2, 3, None, 98, 99, 100)
+    )
     choice_rows = '\n'.join(
+        '<tr class="omitted-rows"><td colspan="4" aria-label="Intermediate rows omitted">…</td></tr>'
+        if chance is None else
         f'<tr><th scope="row">{chance}%</th>'
         f'<td>{prize} if Wheel A is selected</td>'
         f'<td>{chance}% chance of {prize}</td>'
         f'<td><b>{"Wheel option" if chance <= 70 else "Lottery option"}</b></td></tr>'
-        for chance in range(101)
+        for chance in (1, 2, 3, None, 70, 71, None, 98, 99, 100)
     )
     return f'''<!doctype html>
 <html lang="en">
@@ -37,11 +47,12 @@ def page():
 .choice-list {{ border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; margin: 20px 0; }}
 summary {{ cursor: pointer; font-weight: 600; }}
 summary:focus-visible {{ outline: 2px solid var(--accent); outline-offset: 4px; }}
-.mpl-scroll {{ max-height: 400px; overflow: auto; margin-top: 14px; }}
+.mpl-scroll {{ overflow-x: auto; margin-top: 14px; }}
 .mpl-scroll:focus-visible {{ outline: 2px solid var(--accent); outline-offset: 2px; }}
 .mpl-scroll table {{ min-width: 520px; }}
 .mpl-scroll thead th {{ position: sticky; top: 0; z-index: 1; }}
 .mpl-scroll caption {{ text-align: left; font-weight: 600; padding-bottom: 10px; }}
+.omitted-rows td {{ text-align: center; }}
 @media (max-width: 520px) {{ .options {{ grid-template-columns: 1fr; }} }}
 @media print {{ .options, tr {{ break-inside: avoid; }} .mpl-scroll {{ max-height: none; overflow: visible; }} }}
 </style>
@@ -84,6 +95,19 @@ summary:focus-visible {{ outline: 2px solid var(--accent); outline-offset: 4px; 
 <p>You receive <b>{prize} with a given chance</b>, and $0 otherwise. This lottery does not depend on which wheel is selected.</p>
 </div>
 </div>
+<details class="choice-list">
+<summary>Compare the two options in a choice list</summary>
+<p>The wheel option stays the same in every row; the lottery's chance of winning changes. The dots stand for omitted rows. Both options pay $0 when you do not win.</p>
+<div class="mpl-scroll" tabindex="0" role="region" aria-label="Shortened comparison of the wheel and lottery options">
+<table>
+<caption>The two options at different lottery chances</caption>
+<thead><tr><th scope="col">Lottery chance</th><th scope="col">Wheel option</th><th scope="col">Lottery option</th></tr></thead>
+<tbody>
+{general_rows}
+</tbody>
+</table>
+</div>
+</details>
 <p><b>Your estimate tells the computer which option to use.</b></p>
 <p>The computer draws a random percentage between 0% and 100%, with all values equally likely. This is the lottery's chance of winning. Your answer does not change this draw, and the draw does not depend on which wheel is selected.</p>
 <ul>
@@ -105,10 +129,10 @@ summary:focus-visible {{ outline: 2px solid var(--accent); outline-offset: 4px; 
 <p>Your own best estimate makes the computer use the option that, according to your estimate, gives you the greater chance of winning. If the chances are equal, either option is equally good. Reporting a higher or lower number can make it use the option you think is worse.</p>
 
 <details class="choice-list">
-<summary>See the full choice list for the 70% example</summary>
-<p>This list illustrates the payment rule at whole percentages. For an estimate of 70%, the wheel option is used through 70%; above 70%, the lottery option is used. Your estimate fills in these choices automatically.</p>
+<summary>See the choice list for the 70% example</summary>
+<p>This shortened list illustrates the payment rule; the dots stand for omitted rows. For an estimate of 70%, the wheel option is used through 70%; above 70%, the lottery option is used. Your estimate fills in these choices automatically.</p>
 <p>The computer's random percentage can also fall between the whole percentages shown. Both options pay $0 when you do not win.</p>
-<div class="mpl-scroll" tabindex="0" role="region" aria-label="Choice list for a 70 percent estimate; scroll to see all lottery chances">
+<div class="mpl-scroll" tabindex="0" role="region" aria-label="Shortened choice list for a 70 percent estimate">
 <table>
 <caption>Your estimate: A 70% — B 30%</caption>
 <thead><tr><th scope="col">Lottery chance</th><th scope="col">Wheel option</th><th scope="col">Lottery option</th><th scope="col">Option used</th></tr></thead>

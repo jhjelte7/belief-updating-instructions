@@ -14,11 +14,12 @@
 .choice-list { border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; margin: 20px 0; }
 summary { cursor: pointer; font-weight: 600; }
 summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
-.mpl-scroll { max-height: 400px; overflow: auto; margin-top: 14px; }
+.mpl-scroll { overflow-x: auto; margin-top: 14px; }
 .mpl-scroll:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .mpl-scroll table { min-width: 520px; }
 .mpl-scroll thead th { position: sticky; top: 0; z-index: 1; }
 .mpl-scroll caption { text-align: left; font-weight: 600; padding-bottom: 10px; }
+.omitted-rows td { text-align: center; }
 @media (max-width: 520px) { .options { grid-template-columns: 1fr; } }
 @media print { .options, tr { break-inside: avoid; } .mpl-scroll { max-height: none; overflow: visible; } }
 </style>
@@ -64,6 +65,25 @@ summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 <p>You receive <b>$10.00 with a given chance</b>, and $0 otherwise. This lottery does not depend on which wheel is selected.</p>
 </div>
 </div>
+<details class="choice-list">
+<summary>Compare the two options in a choice list</summary>
+<p>The wheel option stays the same in every row; the lottery's chance of winning changes. The dots stand for omitted rows. Both options pay $0 when you do not win.</p>
+<div class="mpl-scroll" tabindex="0" role="region" aria-label="Shortened comparison of the wheel and lottery options">
+<table>
+<caption>The two options at different lottery chances</caption>
+<thead><tr><th scope="col">Lottery chance</th><th scope="col">Wheel option</th><th scope="col">Lottery option</th></tr></thead>
+<tbody>
+<tr><th scope="row">1%</th><td>$10.00 if Wheel A is selected</td><td>1% chance of $10.00</td></tr>
+<tr><th scope="row">2%</th><td>$10.00 if Wheel A is selected</td><td>2% chance of $10.00</td></tr>
+<tr><th scope="row">3%</th><td>$10.00 if Wheel A is selected</td><td>3% chance of $10.00</td></tr>
+<tr class="omitted-rows"><td colspan="3" aria-label="Intermediate rows omitted">…</td></tr>
+<tr><th scope="row">98%</th><td>$10.00 if Wheel A is selected</td><td>98% chance of $10.00</td></tr>
+<tr><th scope="row">99%</th><td>$10.00 if Wheel A is selected</td><td>99% chance of $10.00</td></tr>
+<tr><th scope="row">100%</th><td>$10.00 if Wheel A is selected</td><td>100% chance of $10.00</td></tr>
+</tbody>
+</table>
+</div>
+</details>
 <p><b>Your estimate tells the computer which option to use.</b></p>
 <p>The computer draws a random percentage between 0% and 100%, with all values equally likely. This is the lottery's chance of winning. Your answer does not change this draw, and the draw does not depend on which wheel is selected.</p>
 <ul>
@@ -85,112 +105,21 @@ summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 <p>Your own best estimate makes the computer use the option that, according to your estimate, gives you the greater chance of winning. If the chances are equal, either option is equally good. Reporting a higher or lower number can make it use the option you think is worse.</p>
 
 <details class="choice-list">
-<summary>See the full choice list for the 70% example</summary>
-<p>This list illustrates the payment rule at whole percentages. For an estimate of 70%, the wheel option is used through 70%; above 70%, the lottery option is used. Your estimate fills in these choices automatically.</p>
+<summary>See the choice list for the 70% example</summary>
+<p>This shortened list illustrates the payment rule; the dots stand for omitted rows. For an estimate of 70%, the wheel option is used through 70%; above 70%, the lottery option is used. Your estimate fills in these choices automatically.</p>
 <p>The computer's random percentage can also fall between the whole percentages shown. Both options pay $0 when you do not win.</p>
-<div class="mpl-scroll" tabindex="0" role="region" aria-label="Choice list for a 70 percent estimate; scroll to see all lottery chances">
+<div class="mpl-scroll" tabindex="0" role="region" aria-label="Shortened choice list for a 70 percent estimate">
 <table>
 <caption>Your estimate: A 70% — B 30%</caption>
 <thead><tr><th scope="col">Lottery chance</th><th scope="col">Wheel option</th><th scope="col">Lottery option</th><th scope="col">Option used</th></tr></thead>
 <tbody>
-<tr><th scope="row">0%</th><td>$10.00 if Wheel A is selected</td><td>0% chance of $10.00</td><td><b>Wheel option</b></td></tr>
 <tr><th scope="row">1%</th><td>$10.00 if Wheel A is selected</td><td>1% chance of $10.00</td><td><b>Wheel option</b></td></tr>
 <tr><th scope="row">2%</th><td>$10.00 if Wheel A is selected</td><td>2% chance of $10.00</td><td><b>Wheel option</b></td></tr>
 <tr><th scope="row">3%</th><td>$10.00 if Wheel A is selected</td><td>3% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">4%</th><td>$10.00 if Wheel A is selected</td><td>4% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">5%</th><td>$10.00 if Wheel A is selected</td><td>5% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">6%</th><td>$10.00 if Wheel A is selected</td><td>6% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">7%</th><td>$10.00 if Wheel A is selected</td><td>7% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">8%</th><td>$10.00 if Wheel A is selected</td><td>8% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">9%</th><td>$10.00 if Wheel A is selected</td><td>9% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">10%</th><td>$10.00 if Wheel A is selected</td><td>10% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">11%</th><td>$10.00 if Wheel A is selected</td><td>11% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">12%</th><td>$10.00 if Wheel A is selected</td><td>12% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">13%</th><td>$10.00 if Wheel A is selected</td><td>13% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">14%</th><td>$10.00 if Wheel A is selected</td><td>14% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">15%</th><td>$10.00 if Wheel A is selected</td><td>15% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">16%</th><td>$10.00 if Wheel A is selected</td><td>16% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">17%</th><td>$10.00 if Wheel A is selected</td><td>17% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">18%</th><td>$10.00 if Wheel A is selected</td><td>18% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">19%</th><td>$10.00 if Wheel A is selected</td><td>19% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">20%</th><td>$10.00 if Wheel A is selected</td><td>20% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">21%</th><td>$10.00 if Wheel A is selected</td><td>21% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">22%</th><td>$10.00 if Wheel A is selected</td><td>22% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">23%</th><td>$10.00 if Wheel A is selected</td><td>23% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">24%</th><td>$10.00 if Wheel A is selected</td><td>24% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">25%</th><td>$10.00 if Wheel A is selected</td><td>25% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">26%</th><td>$10.00 if Wheel A is selected</td><td>26% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">27%</th><td>$10.00 if Wheel A is selected</td><td>27% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">28%</th><td>$10.00 if Wheel A is selected</td><td>28% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">29%</th><td>$10.00 if Wheel A is selected</td><td>29% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">30%</th><td>$10.00 if Wheel A is selected</td><td>30% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">31%</th><td>$10.00 if Wheel A is selected</td><td>31% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">32%</th><td>$10.00 if Wheel A is selected</td><td>32% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">33%</th><td>$10.00 if Wheel A is selected</td><td>33% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">34%</th><td>$10.00 if Wheel A is selected</td><td>34% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">35%</th><td>$10.00 if Wheel A is selected</td><td>35% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">36%</th><td>$10.00 if Wheel A is selected</td><td>36% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">37%</th><td>$10.00 if Wheel A is selected</td><td>37% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">38%</th><td>$10.00 if Wheel A is selected</td><td>38% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">39%</th><td>$10.00 if Wheel A is selected</td><td>39% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">40%</th><td>$10.00 if Wheel A is selected</td><td>40% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">41%</th><td>$10.00 if Wheel A is selected</td><td>41% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">42%</th><td>$10.00 if Wheel A is selected</td><td>42% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">43%</th><td>$10.00 if Wheel A is selected</td><td>43% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">44%</th><td>$10.00 if Wheel A is selected</td><td>44% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">45%</th><td>$10.00 if Wheel A is selected</td><td>45% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">46%</th><td>$10.00 if Wheel A is selected</td><td>46% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">47%</th><td>$10.00 if Wheel A is selected</td><td>47% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">48%</th><td>$10.00 if Wheel A is selected</td><td>48% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">49%</th><td>$10.00 if Wheel A is selected</td><td>49% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">50%</th><td>$10.00 if Wheel A is selected</td><td>50% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">51%</th><td>$10.00 if Wheel A is selected</td><td>51% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">52%</th><td>$10.00 if Wheel A is selected</td><td>52% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">53%</th><td>$10.00 if Wheel A is selected</td><td>53% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">54%</th><td>$10.00 if Wheel A is selected</td><td>54% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">55%</th><td>$10.00 if Wheel A is selected</td><td>55% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">56%</th><td>$10.00 if Wheel A is selected</td><td>56% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">57%</th><td>$10.00 if Wheel A is selected</td><td>57% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">58%</th><td>$10.00 if Wheel A is selected</td><td>58% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">59%</th><td>$10.00 if Wheel A is selected</td><td>59% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">60%</th><td>$10.00 if Wheel A is selected</td><td>60% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">61%</th><td>$10.00 if Wheel A is selected</td><td>61% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">62%</th><td>$10.00 if Wheel A is selected</td><td>62% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">63%</th><td>$10.00 if Wheel A is selected</td><td>63% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">64%</th><td>$10.00 if Wheel A is selected</td><td>64% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">65%</th><td>$10.00 if Wheel A is selected</td><td>65% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">66%</th><td>$10.00 if Wheel A is selected</td><td>66% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">67%</th><td>$10.00 if Wheel A is selected</td><td>67% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">68%</th><td>$10.00 if Wheel A is selected</td><td>68% chance of $10.00</td><td><b>Wheel option</b></td></tr>
-<tr><th scope="row">69%</th><td>$10.00 if Wheel A is selected</td><td>69% chance of $10.00</td><td><b>Wheel option</b></td></tr>
+<tr class="omitted-rows"><td colspan="4" aria-label="Intermediate rows omitted">…</td></tr>
 <tr><th scope="row">70%</th><td>$10.00 if Wheel A is selected</td><td>70% chance of $10.00</td><td><b>Wheel option</b></td></tr>
 <tr><th scope="row">71%</th><td>$10.00 if Wheel A is selected</td><td>71% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">72%</th><td>$10.00 if Wheel A is selected</td><td>72% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">73%</th><td>$10.00 if Wheel A is selected</td><td>73% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">74%</th><td>$10.00 if Wheel A is selected</td><td>74% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">75%</th><td>$10.00 if Wheel A is selected</td><td>75% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">76%</th><td>$10.00 if Wheel A is selected</td><td>76% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">77%</th><td>$10.00 if Wheel A is selected</td><td>77% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">78%</th><td>$10.00 if Wheel A is selected</td><td>78% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">79%</th><td>$10.00 if Wheel A is selected</td><td>79% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">80%</th><td>$10.00 if Wheel A is selected</td><td>80% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">81%</th><td>$10.00 if Wheel A is selected</td><td>81% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">82%</th><td>$10.00 if Wheel A is selected</td><td>82% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">83%</th><td>$10.00 if Wheel A is selected</td><td>83% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">84%</th><td>$10.00 if Wheel A is selected</td><td>84% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">85%</th><td>$10.00 if Wheel A is selected</td><td>85% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">86%</th><td>$10.00 if Wheel A is selected</td><td>86% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">87%</th><td>$10.00 if Wheel A is selected</td><td>87% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">88%</th><td>$10.00 if Wheel A is selected</td><td>88% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">89%</th><td>$10.00 if Wheel A is selected</td><td>89% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">90%</th><td>$10.00 if Wheel A is selected</td><td>90% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">91%</th><td>$10.00 if Wheel A is selected</td><td>91% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">92%</th><td>$10.00 if Wheel A is selected</td><td>92% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">93%</th><td>$10.00 if Wheel A is selected</td><td>93% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">94%</th><td>$10.00 if Wheel A is selected</td><td>94% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">95%</th><td>$10.00 if Wheel A is selected</td><td>95% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">96%</th><td>$10.00 if Wheel A is selected</td><td>96% chance of $10.00</td><td><b>Lottery option</b></td></tr>
-<tr><th scope="row">97%</th><td>$10.00 if Wheel A is selected</td><td>97% chance of $10.00</td><td><b>Lottery option</b></td></tr>
+<tr class="omitted-rows"><td colspan="4" aria-label="Intermediate rows omitted">…</td></tr>
 <tr><th scope="row">98%</th><td>$10.00 if Wheel A is selected</td><td>98% chance of $10.00</td><td><b>Lottery option</b></td></tr>
 <tr><th scope="row">99%</th><td>$10.00 if Wheel A is selected</td><td>99% chance of $10.00</td><td><b>Lottery option</b></td></tr>
 <tr><th scope="row">100%</th><td>$10.00 if Wheel A is selected</td><td>100% chance of $10.00</td><td><b>Lottery option</b></td></tr>
