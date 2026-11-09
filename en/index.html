@@ -10,6 +10,13 @@
 <main>
 <h1>Instructions for the experiment</h1>
 
+<h2>In short</h2>
+<ul>
+<li>In each of six rounds, you use a slider to estimate how likely it is that the selected wheel is Wheel A or Wheel B: before the first spin and after each of eight spins.</li>
+<li>You receive <b>$9.00</b> for taking part and can win a bonus of <b>$10.00</b>.</li>
+<li>Always set the slider to the probability you believe is correct. This gives you the best chance of winning the bonus for your estimate.</li>
+</ul>
+
 <h2>The two wheels of fortune</h2>
 <p>In this experiment we use two different "wheels of fortune". Each wheel is divided evenly into four fields. Wheel A (the "green wheel") is three quarters green and one quarter yellow. Wheel B (the "yellow wheel") is three quarters yellow and one quarter green. This setup is very important for your decisions during the experiment.</p>
 <img src="../img/wheels.png" width="1259" height="894" alt="Wheel A on the left with three green fields and one yellow field, Wheel B on the right with three yellow fields and one green field">
@@ -17,9 +24,9 @@
 <img src="../img/wheels-covered.png" width="746" height="524" alt="The two wheels with their fields covered">
 
 <h2>How it works</h2>
-<p>The experiment has 6 rounds. In each round there is a "selected wheel": either Wheel A or Wheel B. Because the fields are covered, you cannot see which wheel is the selected wheel.</p>
-<p>In each round you see 8 spins. After each spin, the field that the red pointer at the top of the wheel points to is revealed. The sequence of spins was fixed in advance.</p>
-<p>Which wheel is the selected wheel of a round is determined at random by the computer, in line with the revealed fields: the more green fields are revealed, the more likely Wheel A is the selected wheel; the more yellow fields, the more likely Wheel B. The probabilities are exactly the same as if one of the two wheels had been selected at random (50% – 50%) at the start of the round and then spun. So the revealed fields help you judge which wheel is the selected wheel.</p>
+<p>The experiment has six rounds. In each round there is a "selected wheel": either Wheel A or Wheel B. Because the fields are covered, you cannot see which wheel is the selected wheel.</p>
+<p>In each round you see eight spins. After each spin, the field that the red pointer at the top of the wheel points to is revealed.</p>
+<p>You can think of each round like this: at the start of the round, the computer picks one of the two wheels at random (50% – 50%) and spins it eight times. To be exact, the sequence of spins was fixed in advance, and the computer determines the selected wheel at random in line with the revealed fields: the more green fields are revealed, the more likely Wheel A is the selected wheel; the more yellow fields, the more likely Wheel B. The probabilities are exactly the same as in the simple description. So the revealed fields help you judge which wheel is the selected wheel.</p>
 <p>Because only one field is revealed at a time, a green or yellow field never tells you for certain which wheel is the selected one. The pointer may also point to the same field several times; you do not know whether that is the case.</p>
 
 <h2>The slider</h2>
@@ -33,29 +40,32 @@
 </ul>
 
 <h2>Payment</h2>
-<p>You receive a base payment of <b>$9.00</b> for taking part. You can win an extra <b>$10.00</b> through bonus payments.</p>
+<p>You receive a base payment of <b>$9.00</b> for taking part. You can also win a bonus of <b>$10.00</b>, explained below.</p>
+<h3>Coin flip: which bonus is paid</h3>
+<p>At the end of the experiment, a fair coin flip decides whether you are paid either the bonus for your probability estimate or the random bonus. Each has a 50% chance of being chosen. You never receive both. Both bonuses are explained below.</p>
 <h3>Bonus for your probability estimate</h3>
 <p>At the end of the experiment, one of the six rounds is chosen at random. In that round, one of your nine estimates is chosen at random: before the first spin or after any of the eight spins. Each round and each estimate within it has the same chance of being chosen. The chosen estimate is used for a chance to win <b>$10.00</b>. Since any round can be chosen, it pays to estimate carefully in every round.</p>
 <p>Your chance of winning is highest if you always set the slider to the probability that you yourself believe is correct.</p>
 <h3>The payment rule</h3>
-<p>Your estimate and the selected wheel determine your chance of winning. Think of this chance as winning tickets out of 100: each winning ticket represents a 1% chance of winning.</p>
-<p>The computer calculates the distance between your estimate for Wheel A and 100 if Wheel A is selected, or 0 if Wheel B is selected. The distance is measured in percentage points.</p>
-<p>Winning tickets = 100 − (distance × distance) ÷ 100.</p>
-<p>The computer uses this chance to decide whether you win <b>$10.00</b>. If you do not win, you receive $0.</p>
+<p>Your estimate and the selected wheel determine your chance of winning <b>$10.00</b>: the more probability your estimate puts on the wheel that turns out to be the selected wheel, the higher your chance of winning. If you do not win, you receive $0.</p>
 <h3>An example</h3>
-<p>Suppose you report A: 70% — B: 30%.</p>
+<p>Suppose your estimate is A: 70% — B: 30%.</p>
 <div class="table-wrap"><table>
-<thead><tr><th scope="col">Selected wheel</th><th scope="col">Winning tickets out of 100</th><th scope="col">Chance of winning $10.00</th></tr></thead>
+<thead><tr><th scope="col">Selected wheel</th><th scope="col">Chance of winning $10.00</th></tr></thead>
 <tbody>
-<tr><th scope="row">Wheel A</th><td>The distance is 30.<br>100 − (30 × 30) ÷ 100 = 91.00</td><td>91.00%</td></tr>
-<tr><th scope="row">Wheel B</th><td>The distance is 70.<br>100 − (70 × 70) ÷ 100 = 51.00</td><td>51.00%</td></tr>
+<tr><th scope="row">Wheel A</th><td>91.00%</td></tr>
+<tr><th scope="row">Wheel B</th><td>51.00%</td></tr>
 </tbody>
 </table></div>
-<p>The 70% in this example is just an example, not a suggested answer.</p>
-<p>Reporting your own best estimate gives you the greatest chance of winning, according to your estimate. Reporting a higher or lower number lowers that chance.</p>
+<p>The 70% in this example is just an example, not a suggested estimate.</p>
+<p>Setting the slider to your own best estimate gives you the greatest chance of winning, according to your estimate. A higher or lower estimate lowers that chance.</p>
 
 <details class="choice-list">
-<summary>See more examples</summary>
+<summary>See the exact rule and more examples</summary>
+<p>Think of your chance of winning as winning tickets out of 100: each winning ticket represents a 1% chance of winning.</p>
+<p>The computer calculates the distance between your estimate for Wheel A and 100 if Wheel A is selected, or 0 if Wheel B is selected. The distance is measured in percentage points.</p>
+<p>Winning tickets = 100 − (distance × distance) ÷ 100.</p>
+<p>In the example above, the distance is 30 if Wheel A is selected: 100 − (30 × 30) ÷ 100 = 91.00 winning tickets. If Wheel B is selected, the distance is 70: 100 − (70 × 70) ÷ 100 = 51.00 winning tickets.</p>
 <div class="table-wrap"><table>
 <thead><tr><th scope="col">Your estimate for Wheel A</th><th scope="col">Winning tickets out of 100 if Wheel A is selected</th><th scope="col">Winning tickets out of 100 if Wheel B is selected</th></tr></thead>
 <tbody>
@@ -69,8 +79,6 @@
 </details>
 <h3>Random bonus</h3>
 <p>At the end of the experiment there is also a random bonus of <b>$10.00</b>, which you win with a probability of 50%.</p>
-<h3>Coin flip: which bonus is paid</h3>
-<p>At the end of the experiment, a fair coin flip decides whether you are paid either the bonus for your probability estimate or the random bonus. Each has a 50% chance of being chosen. You never receive both.</p>
 <p>At the end of the experiment we tell you which wheel was the selected wheel in each round and give you a breakdown of your total payment.</p>
 </main>
 </body>
