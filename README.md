@@ -23,7 +23,7 @@ The HTML files are the source: edit the text directly in the file (on GitHub, op
 
 ## Amounts
 
-Amounts are written into each page, not piped from Qualtrics, so they must match the survey: €6.00 show-up, €3.00 questionnaire, €10.00 per-round and wheel bonus in German; the same numbers in $ in English. When an amount changes, search all pages for it and update every occurrence.
+Amounts are written into each page, not piped from Qualtrics, so they must match the survey: €6.00 show-up, €3.00 questionnaire, €10.00 per-round and wheel bonus in German; the same numbers in $ in English. The two English standard pages (`en/index.html`, `en/bdm.html`) instead state a single $9.00 base payment plus an extra $10.00 that can be won through bonus payments. When an amount changes, search all pages for it and update every occurrence.
 
 ## Payment rules
 
