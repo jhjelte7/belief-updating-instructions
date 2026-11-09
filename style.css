@@ -62,3 +62,7 @@ th { background: var(--head); font-weight: 600; }
 .choice-list { border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; margin: 20px 0; }
 summary { cursor: pointer; font-weight: 600; }
 summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+/* Slider lists on the English standard pages: indentation as on the HHU instructions site */
+.site-list { list-style-type: square; margin: 0; padding: 0; }
+.site-list li { margin: 0.9em 0 0.9em 15pt; }
