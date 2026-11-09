@@ -26,31 +26,33 @@
 <p>Before the first spin and after every spin, you use a slider to tell us how likely you think it is that the selected wheel is Wheel A (green wheel) or Wheel B (yellow wheel). Wheel A is shown to the left of the slider, Wheel B to the right.</p>
 <img src="../img/slider.png" width="688" height="218" alt="Slider between Wheel A (left) and Wheel B (right) showing “A: 50% - B: 50%”">
 <ul>
-<li><b>Middle:</b> both wheels are equally likely (50% each). You are completely unsure.</li><li><b>To the left:</b> you think Wheel A is more likely. The further left, the more certain you are. All the way left means "A: 100% - B: 0%".</li><li><b>To the right:</b> you think Wheel B is more likely. The further right, the more certain you are. All the way right means "A: 0% - B: 100%".</li><li><b>Display:</b> above the slider you see the probabilities for Wheel A and B. They always add up to 100%.</li>
+<li>Middle: you think both wheels are equally likely (50% each).</li><li>To the left: you think Wheel A is more likely. The further left, the more certain you are. All the way left means "A: 100% - B: 0%".</li><li>To the right: you think Wheel B is more likely. The further right, the more certain you are. All the way right means "A: 0% - B: 100%".</li><li>Display: above the slider you see the probabilities for Wheel A and B. They always add up to 100%.</li>
 </ul>
 
 <h2>Payment</h2>
 <p>You receive a base payment of <b>$6.00</b> for taking part and an additional <b>$3.00</b> for completing the questionnaire at the end.</p>
 <h3>Bonus for your probability estimate</h3>
-<p>At the end of the experiment one of the six rounds is drawn at random; only this round counts for your bonus. In this round, one of your nine estimates is chosen at random (before the first spin or after any one of the 8 spins). With this estimate you take part in a lottery for <b>$10.00</b>. Since any round can be drawn, it pays to estimate carefully in every round.</p>
-<p>The closer your estimate is to the wheel that is the selected wheel of that round, the more winning tickets you receive.</p>
-<p><b>Your chance of winning is highest if you always set the slider to the probability that you yourself believe is correct.</b></p>
+<p>At the end of the experiment, one of the six rounds is chosen at random. In that round, one of your nine estimates is chosen at random: before the first spin or after any of the eight spins. Each round and each estimate within it has the same chance of being chosen. The chosen estimate is used for a chance to win <b>$10.00</b>. Since any round can be chosen, it pays to estimate carefully in every round.</p>
+<p>Your chance of winning is highest if you always set the slider to the probability that you yourself believe is correct.</p>
 <h3>The payment rule</h3>
-<p>Your estimate and the selected wheel determine your chance of winning. Think of this chance as <b>winning tickets out of 100</b>: each winning ticket represents a 1% chance of winning.</p>
+<p>Your estimate and the selected wheel determine your chance of winning. Think of this chance as winning tickets out of 100: each winning ticket represents a 1% chance of winning.</p>
 <p>The computer calculates the distance between your estimate for Wheel A and 100 if Wheel A is selected, or 0 if Wheel B is selected. The distance is measured in percentage points.</p>
-<p><b>Winning tickets = 100 − (distance × distance) ÷ 100.</b></p>
+<p>Winning tickets = 100 − (distance × distance) ÷ 100.</p>
 <p>Decimal values are kept: for example, 51.25 winning tickets means a 51.25% chance of winning. The computer uses this exact chance to decide whether you win <b>$10.00</b>. If you do not win, you receive $0.</p>
 <h3>An example</h3>
-<p>Suppose you report <b>A: 70% — B: 30%</b>.</p>
+<p>Suppose you report A: 70% — B: 30%.</p>
 <div class="table-wrap"><table>
 <thead><tr><th scope="col">Selected wheel</th><th scope="col">Winning tickets out of 100</th><th scope="col">Chance of winning $10.00</th></tr></thead>
 <tbody>
-<tr><th scope="row">Wheel A</th><td>The distance is 30.<br>100 − (30 × 30) ÷ 100 = <b>91.00</b></td><td><b>91.00%</b></td></tr>
-<tr><th scope="row">Wheel B</th><td>The distance is 70.<br>100 − (70 × 70) ÷ 100 = <b>51.00</b></td><td><b>51.00%</b></td></tr>
+<tr><th scope="row">Wheel A</th><td>The distance is 30.<br>100 − (30 × 30) ÷ 100 = 91.00</td><td>91.00%</td></tr>
+<tr><th scope="row">Wheel B</th><td>The distance is 70.<br>100 − (70 × 70) ÷ 100 = 51.00</td><td>51.00%</td></tr>
 </tbody>
 </table></div>
 <p>The 70% in this example is just an example, not a suggested answer.</p>
-<h3>Other examples</h3>
+<p>Reporting your own best estimate gives you the greatest chance of winning, according to your estimate. Reporting a higher or lower number lowers that chance.</p>
+
+<details class="choice-list">
+<summary>See more examples</summary>
 <div class="table-wrap"><table>
 <thead><tr><th scope="col">Your estimate for Wheel A</th><th scope="col">Winning tickets out of 100 if Wheel A is selected</th><th scope="col">Winning tickets out of 100 if Wheel B is selected</th></tr></thead>
 <tbody>
@@ -61,10 +63,11 @@
 <tr><td>100%</td><td>100.00 (100.00%)</td><td>0.00 (0.00%)</td></tr>
 </tbody>
 </table></div>
+</details>
 <h3>Random bonus</h3>
 <p>At the end of the experiment there is also a random bonus of <b>$10.00</b>, which you win with a probability of 50%.</p>
 <h3>Coin flip: which bonus is paid</h3>
-<p>At the end of the experiment a coin flip decides whether you are paid <b>either</b> the bonus for your probability estimate <b>or</b> the random bonus. You never receive both.</p>
+<p>At the end of the experiment, a fair coin flip decides whether you are paid either the bonus for your probability estimate or the random bonus. Each has a 50% chance of being chosen. You never receive both.</p>
 <p>At the end of the experiment we tell you which wheel was the selected wheel in each round and give you a breakdown of your total payment.</p>
 </main>
 </body>

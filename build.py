@@ -208,33 +208,60 @@ EN = {
     'end': 'At the end of the experiment we tell you which wheel was the selected wheel in each round and give you a breakdown of your total payment.',
 }
 
+# Text shared word for word by the two English standard-treatment pages:
+# en/index.html (RQSR) and en/bdm.html (BDM). Bold is used only for headings and amounts.
+EN_STANDARD_SHARED = {
+    'slider_list': [
+        'Middle: you think both wheels are equally likely (50% each).',
+        'To the left: you think Wheel A is more likely. The further left, the more certain you are. All the way left means "A: 100% - B: 0%".',
+        'To the right: you think Wheel B is more likely. The further right, the more certain you are. All the way right means "A: 0% - B: 100%".',
+        'Display: above the slider you see the probabilities for Wheel A and B. They always add up to 100%.',
+    ],
+    'belief': [
+        'At the end of the experiment, one of the six rounds is chosen at random. In that round, one of your nine estimates is chosen at random: '
+        'before the first spin or after any of the eight spins. Each round and each estimate within it has the same chance of being chosen. '
+        f'The chosen estimate is used for a chance to win <b>{AMOUNTS["en"]["per_round"]}</b>. '
+        'Since any round can be chosen, it pays to estimate carefully in every round.',
+        'Your chance of winning is highest if you always set the slider to the probability that you yourself believe is correct.',
+    ],
+    'coin_ctrl': [
+        'At the end of the experiment, a fair coin flip decides whether you are paid either the bonus for your probability estimate '
+        'or the random bonus. Each has a 50% chance of being chosen. You never receive both.',
+    ],
+}
+
 # The English standard page uses a 100-ticket illustration of the same exact
 # quadratic probabilities. Fractional ticket totals must not be rounded.
 EN_STANDARD_RQSR = {
+    **EN_STANDARD_SHARED,
     'ticket_total': 100,
     'rule_h': 'The payment rule',
     'rule': [
         'Your estimate and the selected wheel determine your chance of winning. '
-        'Think of this chance as <b>winning tickets out of 100</b>: each winning ticket represents a 1% chance of winning.',
+        'Think of this chance as winning tickets out of 100: each winning ticket represents a 1% chance of winning.',
         'The computer calculates the distance between your estimate for Wheel A and 100 if Wheel A is selected, '
         'or 0 if Wheel B is selected. The distance is measured in percentage points.',
-        '<b>Winning tickets = 100 − (distance × distance) ÷ 100.</b>',
+        'Winning tickets = 100 − (distance × distance) ÷ 100.',
         'Decimal values are kept: for example, 51.25 winning tickets means a 51.25% chance of winning. '
         f'The computer uses this exact chance to decide whether you win <b>{AMOUNTS["en"]["per_round"]}</b>. If you do not win, you receive $0.',
     ],
     'table_head': ('Your estimate for Wheel A', 'Winning tickets out of 100 if Wheel A is selected', 'Winning tickets out of 100 if Wheel B is selected'),
     'worked_example': f'''<h3>An example</h3>
-<p>Suppose you report <b>A: 70% — B: 30%</b>.</p>
+<p>Suppose you report A: 70% — B: 30%.</p>
 <div class="table-wrap"><table>
 <thead><tr><th scope="col">Selected wheel</th><th scope="col">Winning tickets out of 100</th><th scope="col">Chance of winning {AMOUNTS['en']['per_round']}</th></tr></thead>
 <tbody>
-<tr><th scope="row">Wheel A</th><td>The distance is 30.<br>100 − (30 × 30) ÷ 100 = <b>91.00</b></td><td><b>91.00%</b></td></tr>
-<tr><th scope="row">Wheel B</th><td>The distance is 70.<br>100 − (70 × 70) ÷ 100 = <b>51.00</b></td><td><b>51.00%</b></td></tr>
+<tr><th scope="row">Wheel A</th><td>The distance is 30.<br>100 − (30 × 30) ÷ 100 = 91.00</td><td>91.00%</td></tr>
+<tr><th scope="row">Wheel B</th><td>The distance is 70.<br>100 − (70 × 70) ÷ 100 = 51.00</td><td>51.00%</td></tr>
 </tbody>
 </table></div>
 <p>The 70% in this example is just an example, not a suggested answer.</p>
-<h3>Other examples</h3>
+<p>Reporting your own best estimate gives you the greatest chance of winning, according to your estimate. Reporting a higher or lower number lowers that chance.</p>
+
+<details class="choice-list">
+<summary>See more examples</summary>
 ''',
+    'examples_close': '</details>\n',
 }
 
 # One stand-alone page per language and treatment; the survey links to the page of its
@@ -302,7 +329,7 @@ def page(T, kind):
 {rows}
 </tbody>
 </table></div>
-{coin}<p>{T['end']}</p>
+{T.get('examples_close', '')}{coin}<p>{T['end']}</p>
 </main>
 </body>
 </html>

@@ -5,15 +5,15 @@ This adds an instruction page; it does not change survey payment code or links.
 """
 from pathlib import Path
 
-from build import AMOUNTS, EN, paras
+from build import AMOUNTS, EN, EN_STANDARD_SHARED, paras
 
 
 def page():
     amount = AMOUNTS['en']
     prize = amount['per_round']
     assert prize == amount['wheel_bonus'], 'This page assumes equal prizes for both bonuses.'
-    slider_items = list(EN['slider_list'])
-    slider_items[0] = '<b>Middle:</b> you think both wheels are equally likely (50% each).'
+    shared = EN_STANDARD_SHARED  # same wording as the RQSR standard page (en/index.html)
+    slider_items = shared['slider_list']
     general_rows = '\n'.join(
         '<tr class="omitted-rows"><td colspan="3" aria-label="Intermediate rows omitted">…</td></tr>'
         if chance is None else
@@ -28,7 +28,7 @@ def page():
         f'<tr><th scope="row">{chance}%</th>'
         f'<td>{prize} if Wheel A is selected</td>'
         f'<td>{chance}% chance of {prize}</td>'
-        f'<td><b>{"Wheel option" if chance <= 70 else "Lottery option"}</b></td></tr>'
+        f'<td>{"Wheel option" if chance <= 70 else "Lottery option"}</td></tr>'
         for chance in (1, 2, 3, None, 70, 71, None, 98, 99, 100)
     )
     return f'''<!doctype html>
@@ -44,9 +44,6 @@ def page():
 .option {{ padding: 16px; border: 1px solid var(--line); border-radius: 6px; }}
 .option h4 {{ font-size: 1rem; margin: 0 0 8px; }}
 .option p {{ margin: 0; }}
-.choice-list {{ border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; margin: 20px 0; }}
-summary {{ cursor: pointer; font-weight: 600; }}
-summary:focus-visible {{ outline: 2px solid var(--accent); outline-offset: 4px; }}
 .mpl-scroll {{ overflow-x: auto; margin-top: 14px; }}
 .mpl-scroll:focus-visible {{ outline: 2px solid var(--accent); outline-offset: 2px; }}
 .mpl-scroll table {{ min-width: 520px; }}
@@ -79,20 +76,19 @@ summary:focus-visible {{ outline: 2px solid var(--accent); outline-offset: 4px; 
 
 <h2 id="payment">Payment</h2>
 <p>{EN['pay_fixed']}</p>
-<h3 id="estimate-bonus">Bonus for your probability estimate</h3>
-<p>At the end of the experiment, <b>one of the six rounds</b> is chosen at random. In that round, <b>one of your nine estimates</b> is chosen at random: before the first spin or after any of the eight spins. Each round and each estimate within it has the same chance of being chosen. The chosen estimate is used for a chance to win <b>{prize}</b>.</p>
-<p><b>Your chance of winning is highest if you always set the slider to the probability that you yourself believe is correct.</b></p>
+<h3 id="estimate-bonus">{EN['belief_h']}</h3>
+{paras(shared['belief'])}
 
 <h3>The payment rule</h3>
-<p>There are two ways to win {prize}:</p>
+<p>There are two ways to win <b>{prize}</b>:</p>
 <div class="options">
 <div class="option">
 <h4>Wheel option</h4>
-<p>You receive <b>{prize} if Wheel A is the selected wheel</b> in that round. If it is Wheel B, you receive $0.</p>
+<p>You receive <b>{prize}</b> if Wheel A is the selected wheel in that round. If it is Wheel B, you receive $0.</p>
 </div>
 <div class="option">
 <h4>Lottery option</h4>
-<p>You receive <b>{prize} with a given chance</b>, and $0 otherwise. This lottery does not depend on which wheel is selected.</p>
+<p>You receive <b>{prize}</b> with a given chance, and $0 otherwise. This lottery does not depend on which wheel is selected.</p>
 </div>
 </div>
 <details class="choice-list">
@@ -108,16 +104,16 @@ summary:focus-visible {{ outline: 2px solid var(--accent); outline-offset: 4px; 
 </table>
 </div>
 </details>
-<p><b>Your estimate tells the computer which option to use.</b></p>
+<p>Your estimate tells the computer which option to use.</p>
 <p>The computer draws a random percentage between 0% and 100%, with all values equally likely. This is the lottery's chance of winning. Your answer does not change this draw, and the draw does not depend on which wheel is selected.</p>
 <ul>
-<li>If <b>your estimate for Wheel A is higher</b> than the lottery chance, the computer uses the <b>wheel option</b>.</li>
-<li>If <b>the lottery chance is higher</b> than your estimate, the computer uses the <b>lottery option</b>, with the chance it drew. A separate random draw then decides whether you win.</li>
+<li>If your estimate for Wheel A is higher than the lottery chance, the computer uses the wheel option.</li>
+<li>If the lottery chance is higher than your estimate, the computer uses the lottery option, with the chance it drew. A separate random draw then decides whether you win.</li>
 <li>If they are equal, the computer uses the wheel option.</li>
 </ul>
 
 <h3>An example</h3>
-<p>Suppose you report <b>A: 70% — B: 30%</b>.</p>
+<p>Suppose you report A: 70% — B: 30%.</p>
 <div class="table-wrap"><table>
 <thead><tr><th scope="col">The computer draws</th><th scope="col">Option used</th><th scope="col">How you win {prize}</th></tr></thead>
 <tbody>
@@ -146,7 +142,7 @@ summary:focus-visible {{ outline: 2px solid var(--accent); outline-offset: 4px; 
 <h3>{EN['rand_h']}</h3>
 {paras(EN['rand'])}
 <h3>{EN['coin_h']}</h3>
-<p>At the end of the experiment, a fair coin flip decides whether you are paid <b>either</b> the bonus for your probability estimate <b>or</b> the random bonus. Each has a 50% chance of being chosen. You never receive both.</p>
+{paras(shared['coin_ctrl'])}
 <p>{EN['end']}</p>
 </main>
 </body>
