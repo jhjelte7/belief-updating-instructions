@@ -23,11 +23,11 @@ The HTML files are the source: edit the text directly in the file (on GitHub, op
 
 ## Amounts
 
-Amounts are written into each page, not piped from Qualtrics, so they must match the survey: €6.00 show-up, €3.00 questionnaire, €10.00 per-round and wheel bonus in German; the same numbers in $ in English. The two English standard pages (`en/index.html`, `en/bdm.html`) instead state a single $9.00 base payment plus an extra $10.00 that can be won through bonus payments. When an amount changes, search all pages for it and update every occurrence.
+Amounts are written into each page, not piped from Qualtrics, so they must match the survey: €6.00 show-up, €3.00 questionnaire, €10.00 per-round and wheel bonus in German; the same numbers in $ in English. All English pages instead state a single $9.00 base payment plus an extra $10.00 that can be won through bonus payments. When an amount changes, search all pages for it and update every occurrence.
 
 ## Payment rules
 
-The English standard RQSR page (`en/index.html`) uses a 100-ticket illustration and a worked 70% example. Winning tickets are `100 - distance^2 / 100`, retaining decimal values; this rescales the original 10,000-ticket explanation without changing the winning probabilities or survey payment code. Example ticket totals and winning percentages display two decimal places. The other RQSR pages retain the 10,000-ticket explanation.
+The English standard RQSR page (`en/index.html`) uses a 100-ticket illustration and a worked 70% example. Winning tickets are `100 - distance^2 / 100`, retaining decimal values; this rescales the original 10,000-ticket explanation without changing the winning probabilities or survey payment code. Example ticket totals and winning percentages display two decimal places. It also shows two extreme examples (A: 0% — B: 100% and A: 100% — B: 0%) in the same table style. The English treatment pages (`en/bonus-wheel.html`, `en/ego.html`) are copies of `en/index.html` that differ only in the title, the coin-flip sentence ("the bonus for the wheel" / "the bonus for your wheel" plus one sentence on reporting the true estimate) and the bonus section that replaces "Random bonus" ("Bonus wheel" / "Your wheel"). When editing `en/index.html`, make the same change on both treatment pages. The German pages retain the 10,000-ticket explanation.
 
 The two English standard pages (`en/index.html`, RQSR, and `en/bdm.html`, BDM) are kept as similar as possible: the slider list, the estimate-bonus paragraphs and the coin-flip text are word for word the same, and only the payment rule differs. Keep them in sync when editing either page.
 
